@@ -1,7 +1,28 @@
-*
-!beamerthemeblei.sty
-!example.tex
-!example.pdf
-!README.md
-!LICENSE
-!.gitignore
+# LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.run.xml
+*.xdv
+tikz/
+
+# Orphaned / unused assets (not referenced in any .tex file)
+Assets/Email.png
+Assets/Email_clean.png
+Assets/UniLu - short.png
+Assets/UniLu.png
+
+# Per-talk output — never commit compiled slides or generated figures here
+output/
+figures/
+content/

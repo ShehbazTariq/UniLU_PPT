@@ -1,93 +1,94 @@
-# Blei beamer theme
+# UniLU/SnT Beamer Theme
 
-A clean and minimal Beamer theme mimicking David Blei's presentation from his [Variational Inference tutorial](https://youtu.be/DaqNNLidswA?si=HxNOvryN041XVdjg) and developed for academic presentations.
+A clean, minimal Beamer theme for academic presentations, extended from
+[mvsoom/beamerthemeblei](https://github.com/mvsoom/beamerthemeblei) with a full
+University of Luxembourg / SnT institutional identity.
 
-See [`example.pdf`](./example.pdf) for a complete example of the theme in action, showcasing all features and styling options. The source code for that is in [`example.tex`](./example.tex), but with **images and other assets lacking** to keep things simple!
+See [`example.pdf`](./example.pdf) for a compiled preview of all features.
 
-- Clean, minimal design with serif fonts (Bitstream Charter)
-- Simple navigation with page numbers in footer
-- Customizable grey boxes for highlighting content
-- Built-in bibliography support with `biblatex`
-- Overlay functionality for emphasis
-- Automatic section outline slides
-- Optimized for clean academic presentations
+## Features
 
-## Installation
+- Navy title slide and mirrored contact/closing slide with TikZ geometry
+- Automatic per-section "Contents" dividers with clickable navigation
+- Bottom-centre outline button on every content slide (jumps to current section)
+- Numbered corner arc (frame counter) on content slides
+- uni.lu + SnT footer logos on content and divider slides
+- `\notes{point; point}` helper for structured speaker notes
+- `\widesep` for relaxed bullet spacing
+- `\colorboxed` for highlighting equations
+- `\missingfigure{}` placeholder — missing figure paths compile cleanly
+- Built-in bibliography support with `biblatex` / `biber`
 
-1. Download [`beamerthemeblei.sty`](./beamerthemeblei.sty) or clone the repo
-2. Place it in your local texmf directory:
+## Quick start
+
+1. Clone the repo and place `beamerthemeblei.sty` in your local texmf tree:
    ```
    ~/texmf/tex/latex/local/beamerthemeblei.sty
    ```
+2. Edit `Sections/01_metadata.tex` — set your title, author, event, and contact details.
+3. Replace `Sections/03_*.tex` through `Sections/08_*.tex` with your content.
+4. Build:
+   ```powershell
+   pwsh academic-beamer/scripts/build.ps1
+   ```
+   Two passes are mandatory (TikZ `remember picture`). The script closes Adobe
+   Acrobat before compiling to avoid PDF file-lock errors.
 
-## Usage
+## File map
 
-### Basic usage
-
-```latex
-\documentclass[10pt,xcolor={dvipsnames}]{beamer}
-
-\usetheme{blei} % <---- Use the theme
-
-\title{Your Presentation Title}
-\author{Your Name}
-\date{\today}
-
-\begin{document}
-
-\maketitle
-
-\begin{frame}{Your First Slide}
-    Content goes here...
-\end{frame}
-
-\end{document}
+```
+UniLU_PPT/
+  example.tex              driver — \input order, \begin/\end{document}
+  beamerthemeblei.sty      base theme (do not edit unless redesigning)
+  library.bib              BibLaTeX bibliography
+  Assets/                  logos and QR assets
+  Sections/
+    00_preamble.tex        packages, macros, content-slide chrome
+    01_metadata.tex        ← edit per talk: title, author, event, colours
+    02_title_slide.tex     navy title slide (TikZ) — preserve unless redesigning
+    03_motivation_and_model.tex
+    04_prior_candidates.tex
+    05_derivation_and_properties.tex
+    06_application.tex
+    07_summary.tex
+    08_references.tex      replace 03–08 with your content
+    09_closing.tex         closing/contact slide — preserve unless redesigning
+  academic-beamer/
+    SKILL.md               AI agent briefing for this template
+    content_guidelines.md  argument structure and slide density rules
+    slide_patterns.md      copy-paste LaTeX frame templates
+    prompts/               ready-made agent prompts
+    scripts/
+      build.ps1            two-pass build + PDF-lock workaround
+      clean_bg.py          flood-fill background remover for logos (Pillow)
 ```
 
-### With bibliography
+## Decision table
 
-```latex
-\documentclass[10pt,xcolor={dvipsnames}]{beamer}
+| Want to change | Edit |
+|---|---|
+| Title, author, date, event, contact, theme colours | `Sections/01_metadata.tex` |
+| Content-slide chrome: section label, corner arc, footer logos | `Sections/00_preamble.tex` |
+| Title slide (panel, arcs, logos) | `Sections/02_title_slide.tex` |
+| Closing/contact slide or QR card | `Sections/09_closing.tex` |
+| Add or reorder slides | Create `Sections/NN_name.tex`, add `\input{...}` to `example.tex` |
+| Packages or shared macros | `Sections/00_preamble.tex` |
 
-\usetheme{blei}
-\addbibresource{your-bibliography.bib}
+## Slide patterns
 
-% Your content...
+See `academic-beamer/slide_patterns.md` for ready-to-copy templates:
+standard claim, two-column, equation, overlay, figure-result, summary, backup.
 
-% Add references at the end
-\insertreferences
+## Assets
 
-\end{document}
-```
+Logo files sit in `Assets/`. Files ending `_clean.png` have a transparent
+background suitable for navy slides; regenerate them with `clean_bg.py` if you
+replace a source logo.
 
-### Some features
+## Credits
 
-All features are on display in [`example.pdf`](./example.pdf); its source code is in [`example.tex`](./example.tex).
+Base theme by [mvsoom](https://github.com/mvsoom/beamerthemeblei), inspired by
+David Blei's Variational Inference tutorial slides. Extended with UniLU/SnT
+institutional identity by Shehbaz Tariq.
 
-#### Grey boxes
-Highlight important content with grey boxes:
-```latex
-\greybox{Your highlighted content here}
-```
-
-#### Overlay text
-Create overlay text for emphasis:
-```latex
-\overlay{Important message}
-```
-
-#### Wide item separation
-Add extra spacing between list items:
-```latex
-\begin{itemize}
-\widesep
-\item First item
-\item Second item
-\end{itemize}
-```
-
-## Credits and license
-
-Many thanks go to David Blei, not in the least for helping me understand VI!
-
-Released under MIT license.
+Released under the MIT license.

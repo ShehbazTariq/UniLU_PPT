@@ -1,0 +1,256 @@
+\documentclass[aspectratio=169,10pt,xcolor={dvipsnames}]{beamer}
+
+%\includeonlyframes{current}
+
+\usetheme{blei} % at ~/texmf/tex/latex/local/
+\addbibresource{library.bib}
+\usetikzlibrary{calc}
+
+% https://tex.stackexchange.com/a/1475/193011
+% PGF doesn't use TikZ, but the tikzplotlib backend does
+%\usetikzlibrary{external}
+%\tikzexternalize[prefix=tikz/]
+
+%%%%%%%%%%
+% \notes %
+%%%%%%%%%%
+\usepackage{pgfpages}
+%\setbeameroption{hide notes} % Only slides
+%\setbeameroption{show only notes} % Only notes
+%\setbeameroption{show notes on second screen=right} % Both
+\setbeamertemplate{note page}{\pagecolor{yellow!5}\vfill\insertnote\vfill}
+
+% https://latex.org/forum/viewtopic.php?t=11357
+\usepackage{xparse}
+\NewDocumentCommand\notes{>{\SplitList{;}}m}
+{
+	\note{%
+    \begin{itemize}
+      \ProcessList{#1}{ \insertitem }
+    \end{itemize}
+    }
+}
+\newcommand\insertitem[1]{\item #1}
+
+
+%%%%%%%%%%%%
+% Packages %
+%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{pgf}
+\DeclareUnicodeCharacter{2212}{-} % Needed for matplotlib's pgf output
+\usepackage{pythonhighlight}
+\usepackage{subfig}
+\usepackage{marvosym}
+\usepackage[normalem]{ulem}
+\let\Cross\relax
+\usepackage{bbding}
+\usepackage{ragged2e}
+\usepackage{multicol}
+
+%\usepackage{bm} % Clashes with main font, so use \boldsymbol
+
+%%%%%%%%%%%%
+% Commands %
+%%%%%%%%%%%%
+\newcommand{\xmax}{x_{\text{max}}}
+\newcommand{\Kmax}{K_{\text{max}}}
+
+\newcommand{\bx}{{\bm x}}
+\newcommand{\bxnull}{{\bm x_0}}
+\newcommand{\blambda}{{\bm \lambda}}
+\newcommand{\ba}{{\bm a}}
+\newcommand{\bb}{{\bm b}}
+\newcommand{\btheta}{{\bm \theta}}
+\newcommand{\balpha}{{\bm \alpha}}
+\newcommand{\bu}{{\bm u}}
+\newcommand{\bd}{{\bm d}}
+\newcommand{\bA}{{\bm A}}
+\newcommand{\bbeta}{{\bm \beta}}
+
+\newcommand{\barx}[1]{\overline{x_{#1}}}
+\newcommand{\baru}[1]{\overline{u_{#1}}}
+\newcommand{\bbarx}{\overline{\bm x}}
+\newcommand{\bbarxnull}{\overline{\bm{x_0}}}
+\newcommand{\bbaru}{\overline{{\bm u}}}
+
+\DeclareMathOperator{\Pareto}{\mathsf{Pareto}}
+\DeclareMathOperator{\ParetoChain}{\mathsf{ParetoChain}}
+\DeclareMathOperator{\Jeffreys}{\mathsf{Jeffreys}}
+\DeclareMathOperator{\Exp}{\mathsf{Exp}}
+
+\newcommand{\priorinformation}{\mathcal{I}}
+\newcommand{\likelihood}{\mathcal{L}}
+\newcommand{\model}{\mathcal{M}}
+
+\newcommand{\orderedregion}{\mathcal{R}}
+
+\newcommand{\data}[1]{{\mathsf{#1}}}
+\newcommand{\little}{\data{little}}
+\newcommand{\until}{\data{until}}
+\newcommand{\shore}{\data{shore}}
+\newcommand{\that}{\data{that}}
+\newcommand{\you}{\data{you}}
+
+\newcommand{\numb}[1]{\mathsf{#1}}
+\newcommand{\bm}{\boldsymbol}
+
+\let\originalincludegraphics\includegraphics
+\newcommand{\missingfigure}[1]{%
+\fbox{\parbox[c][2cm][c]{4cm}{\centering\scriptsize Missing figure\\\texttt{#1}}}%
+}
+\renewcommand{\includegraphics}[2][]{%
+\IfFileExists{#2}{\originalincludegraphics[#1]{#2}}{\missingfigure{#2}}%
+}
+\newcommand{\pgffigure}[2]{%
+\IfFileExists{img/#1}{\scalebox{#2}{\input{img/#1}}}{\scalebox{#2}{\missingfigure{img/#1}}}%
+}
+
+\newcommand{\citelink}[2]{\href{#1}{\small\color{gray}[#2]}}
+
+\definecolor{mplblue}{HTML}{1f77b4}
+\definecolor{mplorange}{HTML}{ff7f0e}
+
+% https://tex.stackexchange.com/a/326380/193011
+\usepackage{xcolor}
+% Syntax: \colorboxed[<color model>]{<color specification>}{<math formula>}
+\newcommand*{\colorboxed}{}
+\def\colorboxed#1#{%
+  \colorboxedAux{#1}%
+}
+\newcommand*{\colorboxedAux}[3]{%
+  % #1: optional argument for color model
+  % #2: color specification
+  % #3: formula
+  \begingroup
+    \colorlet{cb@saved}{.}%
+    \color#1{#2}%
+    \boxed{%
+      \color{cb@saved}%
+      #3%
+    }%
+  \endgroup
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Content-slide layout (logos, section label, page number + corner arc)      %
+%   - bottom left  : uni.lu short logo                                        %
+%   - bottom right : SnT logo                                                 %
+%   - top left     : current \section name (small, grey)                      %
+%   - top right    : frame number inside a light corner arc                   %
+%   - frame title  : large bold navy                                          %
+% Plain frames (e.g. the title slide) suppress the headline/footline, so      %
+% these decorations appear only on ordinary content frames.                   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{titlenavy}{HTML}{1d2c44}   % big frame title
+\definecolor{sectiongrey}{HTML}{8a93a3} % top-left section label
+\definecolor{arcgrey}{HTML}{c9cedb}     % top-right corner arc
+
+\setbeamercolor{background canvas}{bg=white}
+
+% ── Frame title: large, bold, navy ───────────────────────────────────────
+\setbeamercolor{frametitle}{fg=titlenavy}
+\setbeamerfont{frametitle}{series=\bfseries,size=\huge}
+\setbeamertemplate{frametitle}{%
+  \vspace{0.9em}%
+  {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}%
+  \vspace{0.15em}%
+}
+
+% ── Headline: section label (top-left) + frame number in a corner arc ─────
+%  No on-slide navigation bar — jumping around is done via the bottom-centre
+%  outline button and the Contents/divider pages.
+\setbeamertemplate{headline}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    % small light quarter-circle, detached from both edges
+    \draw[arcgrey, line width=0.9pt, line cap=round]
+      ([xshift=-1.05cm, yshift=-0.40cm]current page.north east)
+      arc[start angle=180, end angle=270, radius=0.75cm];
+    % frame counter, at the arc's centre (current/total)
+    \node[anchor=center, text=titlenavy, font=\bfseries\scriptsize]
+      at ([xshift=-0.40cm, yshift=-0.50cm]current page.north east)
+      {\insertframenumber/\inserttotalframenumber};
+    % section label, top-left (context only — not a nav control)
+    \node[anchor=north west, text=sectiongrey, font=\small]
+      at ([xshift=0.045\paperwidth, yshift=-0.30cm]current page.north west)
+      {\insertsection};
+  \end{tikzpicture}%
+}
+
+% ── Table-of-contents styling (master outline + section dividers) ─────────
+\setbeamercolor{section in toc}{fg=titlenavy}
+\setbeamercolor{section in toc shaded}{fg=titlenavy!68!white}
+\setbeamercolor{subsection in toc}{fg=titlenavy}
+\setbeamercolor{subsection in toc shaded}{fg=titlenavy!58!white}
+\setbeamerfont{section in toc}{series=\bfseries}
+\setbeamerfont{subsection in toc}{size=\footnotesize}
+
+% ── Outline button: small clickable "contents" icon → current section's
+%    divider (each divider lists every section, so it is a full nav hub) ────
+\newcommand{\outlinebutton}{%
+  \hyperlink{sec\arabic{section}}{%
+    \scalebox{0.7}{%
+      \begin{tikzpicture}[x=1mm, y=1mm, baseline=-0.4mm]
+        \foreach \yy in {0,-1.6,-3.2}{%
+          \fill[sectiongrey] (0,\yy) circle (0.42);
+          \draw[sectiongrey, line width=0.8pt, line cap=round] (1.4,\yy) -- (5.4,\yy);
+        }%
+      \end{tikzpicture}%
+    }%
+  }%
+}
+
+% ── Footline: uni.lu (left) · outline button (centre) · SnT (right) ───────
+\setbeamertemplate{footline}{%
+  \hbox to\paperwidth{%
+    \hspace*{0.03\paperwidth}%
+    \raisebox{0pt}{\includegraphics[height=0.055\paperheight]{Assets/UniLu_short.png}}%
+    \hfil
+    \raisebox{0.013\paperheight}{\outlinebutton}%
+    \hfil
+    \raisebox{0pt}{\includegraphics[height=0.050\paperheight]{Assets/SnT_logo.png}}%
+    \hspace*{0.03\paperwidth}%
+  }%
+  \vspace*{0.025\paperheight}%
+}
+
+% ── Blocks: navy title bar, light body, rounded ───────────────────────────
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block title}{bg=titlenavy,fg=white}
+\setbeamercolor{block body}{bg=titlenavy!7,fg=black}
+
+% ── Section divider: a clean "Contents" page before each section ──────────
+%  Current section highlighted with its subsections; other sections shaded
+%  with their subsections hidden. TOC entries are clickable.
+\AtBeginSection[]{%
+  {%
+  \usebackgroundtemplate{%
+    \includegraphics[width=\paperwidth,height=\paperheight]{Assets/outline_bg.png}%
+  }%
+  \begin{frame}[plain,noframenumbering,t]{Contents}
+    \hypertarget{sec\arabic{section}}{}%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=south west]
+        at ([xshift=0.03\paperwidth, yshift=0.025\paperheight] current page.south west)
+        {\includegraphics[height=0.055\paperheight]{Assets/UniLu_short.png}};
+      \node[anchor=south east]
+        at ([xshift=-0.03\paperwidth, yshift=0.025\paperheight] current page.south east)
+        {\includegraphics[height=0.050\paperheight]{Assets/SnT_logo.png}};
+    \end{tikzpicture}
+    \vspace{0.25em}
+    {\footnotesize
+    \setlength{\columnsep}{1.2cm}
+    \begin{multicols}{2}
+      \tableofcontents[currentsection,
+                       sectionstyle=show/shaded,
+                       subsectionstyle=show/show/hide]
+    \end{multicols}
+    }
+  \end{frame}
+  }%
+}
+
+%%%%%%%%%
+% Title %

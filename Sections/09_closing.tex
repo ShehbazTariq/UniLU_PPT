@@ -1,0 +1,76 @@
+% ───────────────────────────────────────────────────────────────────────────
+%  CLOSING / CONTACT SLIDE  (horizontal mirror of the title slide)
+%  Panel + accent arcs on the LEFT; contact block + QR card on the RIGHT.
+% ───────────────────────────────────────────────────────────────────────────
+\begin{frame}[plain,t]
+\begin{tikzpicture}[remember picture, overlay]
+
+  %% ── Background ──────────────────────────────────────────────────────────
+  \fill[navybg] (current page.south west) rectangle (current page.north east);
+
+  %% ── Mirrored corner geometry (arcs first, panel on top) ──────────────────
+  %  Same construction as the title slide, reflected about x = 8 in the 16x9
+  %  grid: panel on the LEFT with a rounded bottom-RIGHT corner.
+  \begin{scope}[shift={(current page.south west)},
+                x=0.0625\paperwidth, y=0.1111111\paperheight]
+
+    % Red accent (outer) — centre (3.95, 3.65), r = 1.35.
+    \draw[accentred, line width=1.4pt, line cap=round]
+      (5.30, 9.0) -- (5.30, 3.65)
+      arc[start angle=0, end angle=-90, radius=1.35] -- (2.5, 2.30);
+
+    % White accent (inner) — centre (3.15, 3.30), r = 1.55; tail on bottom edge.
+    \draw[white!75!periwinkle, line width=0.9pt, line cap=round]
+      (4.70, 9.0) -- (4.70, 3.30)
+      arc[start angle=0, end angle=-90, radius=1.55] -- (0.6, 1.75);
+
+    % Left periwinkle panel ON TOP — rounded bottom-RIGHT corner;
+    % top and left edges run off-screen. Occludes the arcs' tails.
+    \fill[periwinkle]
+      (4.15, 9.3) -- (-0.4, 9.3) -- (-0.4, 1.75) -- (2.85, 1.75)
+      arc[start angle=270, end angle=360, radius=1.30] -- cycle;
+
+  \end{scope}
+
+  %% ── uni.lu logo (top of the right-hand area) ─────────────────────────────
+  \node[anchor=north west]
+    at ([xshift=0.40\paperwidth, yshift=-0.095\paperheight] current page.north west)
+    {\includegraphics[height=0.085\paperheight]{Assets/Uni_lu_White_last.png}};
+
+  %% ── Accent bar above the heading ─────────────────────────────────────────
+  \draw[periwinkle, line width=2.4pt, line cap=round]
+    ([xshift=0.405\paperwidth, yshift=-0.275\paperheight] current page.north west) --
+    ([xshift=0.560\paperwidth, yshift=-0.275\paperheight] current page.north west);
+
+  %% ── "Contact" heading ────────────────────────────────────────────────────
+  \node[anchor=north west,
+        font=\LARGE\bfseries\sffamily,
+        text=periwinkle]
+    at ([xshift=0.40\paperwidth, yshift=-0.310\paperheight] current page.north west)
+    {Contact};
+
+  %% ── Contact details ──────────────────────────────────────────────────────
+  \node[anchor=north west,
+        text width=0.19\paperwidth,
+        align=left,
+        font=\small\sffamily,
+        text=textdim]
+    at ([xshift=0.40\paperwidth, yshift=-0.430\paperheight] current page.north west)
+    {\insertauthor\\[6pt]
+     \textcolor{white}{Email:}~\contactemail\\[4pt]
+     \textcolor{white}{Web:}~\contactweb};
+
+  %% ── LinkedIn QR card (right-hand side) ───────────────────────────────────
+  \node[anchor=north]
+    at ([xshift=0.800\paperwidth, yshift=-0.150\paperheight] current page.north west)
+    {\includegraphics[height=0.56\paperheight]{Assets/QR_Linkedin_clean.png}};
+
+  %% ── Caption under the card ───────────────────────────────────────────────
+  \node[anchor=north,
+        font=\footnotesize\sffamily,
+        text=textdim]
+    at ([xshift=0.800\paperwidth, yshift=-0.725\paperheight] current page.north west)
+    {Scan to connect on LinkedIn};
+
+\end{tikzpicture}
+\end{frame}

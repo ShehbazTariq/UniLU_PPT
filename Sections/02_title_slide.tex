@@ -1,0 +1,103 @@
+% ───────────────────────────────────────────────────────────────────────────
+%  TITLE SLIDE  (driven by the metadata in 01_metadata.tex)
+% ───────────────────────────────────────────────────────────────────────────
+\begin{frame}[plain,t]
+\begin{tikzpicture}[remember picture, overlay]
+
+  %% ── Background ──────────────────────────────────────────────────────────
+  \fill[navybg] (current page.south west) rectangle (current page.north east);
+
+  %% ── Corner geometry (accent arcs, then panel on top) ─────────────────────
+  %  Work in a 16x9 grid (true squares, since aspectratio=169 ⇒ 10mm/unit).
+  %  Each accent = vertical line (tangent) + quarter arc + horizontal tail.
+  %  Drawing the ARCS FIRST and the panel ON TOP makes the horizontal tails
+  %  disappear behind the panel edge.
+  %      white tail  y = 1.75  → runs along the panel BOTTOM edge
+  %      red  tail   y = 2.30  → a bit above white, slides behind the edge
+  \begin{scope}[shift={(current page.south west)},
+                x=0.0625\paperwidth, y=0.1111111\paperheight]
+
+    % Red accent (outer) — centre (12.05, 3.65), r = 1.35.
+    \draw[accentred, line width=1.4pt, line cap=round]
+      (10.70, 9.0) -- (10.70, 3.65)
+      arc[start angle=180, end angle=270, radius=1.35] -- (13.5, 2.30);
+
+    % White accent (inner) — centre (12.85, 3.30), r = 1.55; tail on bottom edge.
+    \draw[white!75!periwinkle, line width=0.9pt, line cap=round]
+      (11.30, 9.0) -- (11.30, 3.30)
+      arc[start angle=180, end angle=270, radius=1.55] -- (15.4, 1.75);
+
+    % Right periwinkle panel ON TOP — large, round bottom-left corner;
+    % top and right edges run off-screen. Occludes the arcs' right tails.
+    \fill[periwinkle]
+      (11.85, 9.3) -- (16.4, 9.3) -- (16.4, 1.75) -- (13.15, 1.75)
+      arc[start angle=270, end angle=180, radius=1.30] -- cycle;
+
+  \end{scope}
+
+  %% ── Title ───────────────────────────────────────────────────────────────
+  \node[anchor=north west,
+        text width=0.62\paperwidth,
+        align=left,
+        inner sep=0pt,
+        font=\bfseries\large\sffamily,
+        text=white]
+    at ([xshift=0.050\paperwidth, yshift=-0.175\paperheight] current page.north west)
+    {\inserttitle};
+
+  %% ── Author name ─────────────────────────────────────────────────────────
+  \node[anchor=north,
+        text width=0.67\paperwidth,
+        align=center,
+        font=\bfseries\normalsize\sffamily,
+        text=white]
+    at ([xshift=0.36\paperwidth, yshift=-0.445\paperheight] current page.north west)
+    {\insertauthor};
+
+  %% ── Affiliation ─────────────────────────────────────────────────────────
+  \node[anchor=north,
+        text width=0.64\paperwidth,
+        align=center,
+        font=\footnotesize\sffamily,
+        text=textdim]
+    at ([xshift=0.36\paperwidth, yshift=-0.515\paperheight] current page.north west)
+    {\insertinstitute};
+
+  %% ── Event short name (highlighted) ──────────────────────────────────────
+  \node[anchor=north,
+        align=center,
+        font=\Large\bfseries\sffamily,
+        text=accentblue]
+    at ([xshift=0.36\paperwidth, yshift=-0.650\paperheight] current page.north west)
+    {\eventname};
+
+  %% ── Event full name ─────────────────────────────────────────────────────
+  \node[anchor=north,
+        text width=0.72\paperwidth,
+        align=center,
+        font=\bfseries\small\sffamily,
+        text=white]
+    at ([xshift=0.36\paperwidth, yshift=-0.730\paperheight] current page.north west)
+    {\eventfull};
+
+  %% ── Date and location ───────────────────────────────────────────────────
+  \node[anchor=north,
+        text width=0.72\paperwidth,
+        align=center,
+        font=\small\sffamily,
+        text=textdim]
+    at ([xshift=0.36\paperwidth, yshift=-0.840\paperheight] current page.north west)
+    {\insertdate};
+
+  %% ── UniLu logo — bottom left ────────────────────────────────────────────
+  \node[anchor=south west]
+    at ([xshift=0.025\paperwidth, yshift=0.025\paperheight] current page.south west)
+    {\includegraphics[height=0.075\paperheight]{Assets/UniLu_White.png}};
+
+  %% ── SnT logo — bottom right ─────────────────────────────────────────────
+  \node[anchor=south east]
+    at ([xshift=-0.025\paperwidth, yshift=0.025\paperheight] current page.south east)
+    {\includegraphics[height=0.065\paperheight]{Assets/SnT_White.png}};
+
+\end{tikzpicture}
+\end{frame}
