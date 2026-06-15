@@ -92,8 +92,10 @@
 % Font %
 %%%%%%%%
 
-\usepackage[bitstream-charter]{mathdesign}
-\usepackage[T1]{fontenc}
+% Keep the theme's serif text face without replacing LaTeX's standard math
+% alphabets. The previous mathdesign setup changed \mathcal, \mathrm, and
+% related symbols, which made equations look non-standard in technical decks.
+\usepackage{charter}
 \usefonttheme{serif} % default family is serif
 
 \setbeamerfont{title}{series=\bfseries,parent=structure}
