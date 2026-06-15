@@ -1,6 +1,6 @@
 ---
 name: academic-beamer
-description: Use for creating, editing, compiling, and reviewing academic Beamer presentations in the UniLU/SnT LaTeX template — conference talks, seminars, defenses, lab meetings, paper-to-slide conversions, research updates. Applies when working with example.tex, Sections/*.tex, beamerthemeblei.sty, the title/closing slides, content-slide chrome, LaTeX equations, citations, figures, logos/QR assets, and sectionized Beamer workflows.
+description: Use for creating, editing, compiling, and reviewing academic Beamer presentations in the UniLU/SnT LaTeX template from ShehbazTariq/UniLU_PPT - conference talks, seminars, defenses, lab meetings, paper-to-slide conversions, research updates. Applies when creating new local presentations from the GitHub template repo, working with example.tex, Sections/*.tex, beamerthemeblei.sty, the title/closing slides, content-slide chrome, LaTeX equations, citations, figures, logos/QR assets, and sectionized Beamer workflows.
 ---
 
 # Academic Beamer Skill (UniLU/SnT template)
@@ -9,6 +9,24 @@ description: Use for creating, editing, compiling, and reviewing academic Beamer
 
 Create, revise, compile, or review academic Beamer decks built on the UniLU/SnT
 template in this project. Preserve the institutional design; improve the argument.
+
+## Template source workflow
+
+- Treat `https://github.com/ShehbazTariq/UniLU_PPT` as the canonical template
+  repository for new presentations.
+- Before creating a new presentation, look for an existing local clone of
+  `ShehbazTariq/UniLU_PPT`. If none exists, clone the repo; do not reclone over
+  an existing copy.
+- If the local template clone exists, update it from the remote with a
+  conservative fast-forward pull when the working tree is clean. If local
+  changes would be overwritten or the pull cannot fast-forward, stop and report
+  the state instead of forcing it.
+- Keep presentation-specific content, figures, build artifacts, PDFs, notes,
+  and output folders local to the new deck/workspace. Do not commit or push
+  generated presentation work back to the template repository unless the user
+  explicitly asks.
+- Copy or instantiate from the template for each new deck; use the template repo
+  only as the source of the structure and theme.
 
 ## Template map
 
