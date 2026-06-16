@@ -185,7 +185,7 @@
     % section label, top-left (context only — not a nav control)
     \node[anchor=north west, text=sectiongrey, font=\scriptsize]
       at ([xshift=0.045\paperwidth, yshift=-0.32cm]current page.north west)
-      {\insertsection};
+      {\ifnum\value{section}>0\hyperlink{sec\thesection}{\secname}\else\secname\fi};
   \end{tikzpicture}%
 }
 
@@ -292,7 +292,7 @@
         {\sectionnumberdisplay};
       \node[anchor=west, text=titlenavy, font=\bfseries\LARGE, text width=0.56\paperwidth, align=left]
         at ([xshift=0.285\paperwidth, yshift=-0.430\paperheight] current page.north west)
-        {\MakeUppercase{\insertsection}};
+        {\hyperlink{sec\thesection}{\MakeUppercase{\secname}}};
       \node[anchor=north west, text=titlenavy, text width=0.48\paperwidth, align=left]
         at ([xshift=0.287\paperwidth, yshift=-0.500\paperheight] current page.north west)
         {%
