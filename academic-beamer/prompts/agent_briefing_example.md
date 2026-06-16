@@ -14,12 +14,15 @@ Dr. Shehbaz Tariq · Postdoctoral Researcher, SIGCOM · SnT, University of Luxem
 
 **Per-talk editing rules:**
 - Metadata (title, author, date, event, contact): edit **only** `Sections/01_metadata.tex`
-- Content slides: edit/replace `Sections/03_*.tex` through `Sections/08_*.tex`
+- Content slides: edit/replace `Sections/03_*.tex` through `Sections/07_*.tex`; use `Sections/08_references.tex` only when a bibliography is required
 - Never touch `Sections/02_title_slide.tex`, `Sections/09_closing.tex`, or `beamerthemeblei.sty` unless a redesign is explicitly requested
 - Keep the sectionized architecture: no `\documentclass`, no `\begin/\end{document}` inside `Sections/*` files
 - Add new content by creating a new `Sections/NN_name.tex` and adding one `\input{Sections/NN_name}` line to `example.tex`
 
 **Build:**
+Use `powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/build.ps1`
+if `pwsh` is unavailable.
+
 ```powershell
 pwsh academic-beamer/scripts/build.ps1
 ```
@@ -42,6 +45,10 @@ Two passes are mandatory (TikZ `remember picture`). The script kills Adobe/Sumat
 **Section breaks:** do not include an agenda slide unless asked. Each `\section{...}` creates a modern section card on the old template background with a circular section number, uppercase title, and bullet subheadings from `\subsection{...}` entries; do not add repeated full Contents dividers.
 
 **Frame layout:** normal content frames are top-aligned by default. Start content under the frame title with the template margins; only use `\begin{frame}[c]{...}` for an intentionally centered slide.
+
+**Local scratch:** `content/`, `figures/`, and `output/` are talk-local and ignored by the template repo. Put final visible slide content in `Sections/`.
+
+**Navigation QA:** after section-card or TOC changes, click section headings and subsection bullets in the PDF to confirm they jump to the intended section/subsection.
 
 **Speaker notes:** use `\note{...}` for single-paragraph notes or the `\notes{point one; point two}` helper (defined in `00_preamble.tex`) for bullet-list notes.
 

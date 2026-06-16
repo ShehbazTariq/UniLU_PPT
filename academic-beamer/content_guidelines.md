@@ -31,7 +31,9 @@ Sections/    Beamer source files included by example.tex
 
 `notes/` is a library. Do not copy it wholesale into slides.
 
-`content/` is talk-specific. When useful, create:
+`content/` is talk-specific local scratch/planning output and is ignored by
+Git in the template repo. Use it for intermediate outlines and source maps;
+final visible slide content belongs in `Sections/`. When useful, create:
 
 ```text
 content/deck_outline.yaml
@@ -170,3 +172,5 @@ Before finalizing:
 - Confirm overlays reveal content in the intended order.
 - Confirm figure paths resolve.
 - Confirm citations are either resolved or clearly reported as pending.
+- Click section headings and subsection bullets in the PDF; confirm they jump
+  to the correct section card or subsection start page.

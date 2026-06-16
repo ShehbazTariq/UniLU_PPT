@@ -30,7 +30,11 @@ template in this project. Preserve the institutional design; improve the argumen
 
 ## Template map
 
-Template root = the parent of this skill folder.
+Template root = the parent of this skill folder when using the repo-local copy
+at `UniLU_PPT/academic-beamer/`. When this skill is installed under
+`.codex/skills/academic-beamer`, do not treat the installed skill's parent as
+the template root; locate the active `UniLU_PPT` repo from the user's path,
+current workspace, or an existing clone.
 
 ```text
 UniLU_PPT/
@@ -90,11 +94,11 @@ UniLU_PPT/
   slide. Prefer this over a final references section for meeting decks. Keep an
   end references frame only when the user asks for it or the venue requires a
   bibliography.
-- **Section breaks need approval before redesign.** If changing
-  `\AtBeginSection`, propose a plan first: remove intermediate dividers, replace
-  them with a minimal section-title card, or keep only one opening outline slide.
-  Section labels/headings used for navigation or context should be small and
-  unobtrusive.
+- **Section-break redesigns need approval when unsolicited.** If the user asks
+  for a concrete section-card tweak, implement it and render the example. If
+  you are proposing an unsolicited or ambiguous `\AtBeginSection` redesign,
+  present a short plan first. Section labels/headings used for navigation or
+  context should be small and unobtrusive.
 - **Navigation model.** Do not include an agenda slide by default. Each
   `\section{...}` creates a no-frame-number section card with the old template
   background, a large circular section number, uppercase section title, and
@@ -142,6 +146,12 @@ equivalent:
 Get-Process Acrobat -EA SilentlyContinue | Stop-Process -Force -EA SilentlyContinue
 Set-Location -LiteralPath '<path-to-UniLU_PPT>'   # -LiteralPath: the path has [brackets]
 pdflatex -interaction=nonstopmode example.tex ; pdflatex -interaction=nonstopmode example.tex
+```
+
+If `pwsh` is unavailable on Windows, use:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/build.ps1
 ```
 
 Gotchas: the project path contains `[SigCom]` → always `-LiteralPath`. Run

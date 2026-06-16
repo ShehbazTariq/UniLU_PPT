@@ -188,6 +188,12 @@ Build with the helper (closes Adobe, runs two passes, reports):
 pwsh academic-beamer/scripts/build.ps1
 ```
 
+Windows fallback when `pwsh` is not available:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/build.ps1
+```
+
 Manual equivalent — **two passes** are mandatory (title/closing use TikZ
 `remember picture`; nav/hyperlinks also need a second pass):
 
@@ -196,4 +202,5 @@ Set-Location -LiteralPath '<path-to-UniLU_PPT>'   # -LiteralPath: path has [brac
 pdflatex -interaction=nonstopmode example.tex ; pdflatex -interaction=nonstopmode example.tex
 ```
 
-Open `example.pdf` after compiling and visually check the edited frames.
+Open `example.pdf` after compiling. Visually check edited frames and click
+section/subsection navigation links after any section-card or TOC change.
