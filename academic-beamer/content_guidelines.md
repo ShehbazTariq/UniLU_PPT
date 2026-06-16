@@ -172,5 +172,4 @@ Before finalizing:
 - Confirm overlays reveal content in the intended order.
 - Confirm figure paths resolve.
 - Confirm citations are either resolved or clearly reported as pending.
-- Click section headings and subsection bullets in the PDF; confirm they jump
-  to the correct section card or subsection start page.
+- Click section headings and subsection bullets in the PDF; confirm they jump to the correct section card or subsection start page.
