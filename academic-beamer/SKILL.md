@@ -41,11 +41,12 @@ UniLU_PPT/
     00_preamble.tex        packages, macros, AND the content-slide chrome
     01_metadata.tex        all talk metadata + theme colours  ← edit per talk
     02_title_slide.tex     custom navy title slide (TikZ)
-    03_motivation_and_model.tex .. 08_references.tex
+    03_motivation_and_model.tex .. 07_summary.tex
                            generic EXAMPLE content slides; each opens a
                            \section{...} (+ optional \subsection{...}):
-                           Introduction, Layouts, Equations, Figures, Summary,
-                           References — these feed the auto section dividers
+                           Introduction, Layouts, Equations, Figures, Summary
+    08_references.tex      optional bibliography/reference slide; not included
+                           by default for meeting decks
     09_closing.tex         closing/contact slide (mirror of title + QR card)
   academic-beamer/
     SKILL.md  content_guidelines.md  slide_patterns.md
@@ -57,34 +58,60 @@ UniLU_PPT/
 | Want to change… | Edit |
 | --- | --- |
 | Title, author, affiliation, date, event name, contact email/web, theme colours | `Sections/01_metadata.tex` |
-| Content-slide chrome: section label, numbered corner arc, navy title size, block style, footer logos | `Sections/00_preamble.tex` (the "Content-slide layout" block) |
+| Content-slide chrome: section label, inset frame counter, navy title size, block style, footer logos | `Sections/00_preamble.tex` (the "Content-slide layout" block) |
 | Title slide design (panel, arcs, logos, layout) | `Sections/02_title_slide.tex` |
-| Outline icon, section dividers, TOC/label styling | `Sections/00_preamble.tex` (`\outlinebutton`, `\AtBeginSection`, headline) |
+| Section dividers, TOC/label styling, footer/logo safe area | `Sections/00_preamble.tex` (`\AtBeginSection`, headline, footline) |
 | Closing/contact slide, QR card placement | `Sections/09_closing.tex` |
 | Add/remove/reorder slides | create/edit a `Sections/*.tex`, then add one `\input{...}` to `example.tex` |
 | Packages, repeated macros | `Sections/00_preamble.tex` |
 
 ## This template's specifics
 
-- **Content slides are automatic.** Just write `\section{Label}` (sets the
-  grey top-left label) and `\begin{frame}{Action title}`. The preamble supplies
-  the navy title, the numbered top-right corner arc, styled `block`s, and the
-  uni.lu (left) / SnT (right) footer logos. `\AtBeginSection{}` is intentionally
-  emptied so `\section` adds **no** auto-outline frames.
-- **Navigation (clean model).** Each content section opens with `\section{...}`
-  and may use `\subsection{...}`.
-  - `\AtBeginSection` auto-inserts a **per-section divider** ("Contents",
-    `[plain,noframenumbering]`) before each section: current section
-    highlighted with its subsections, other sections shaded with subsections
-    hidden
-    (`\tableofcontents[currentsection,sectionstyle=show/shaded,subsectionstyle=show/show/hide]`).
-    Each divider sets `\hypertarget{sec\arabic{section}}{}` and lists every
-    section (clickable), so any divider is a full navigation hub.
-  - Content slides carry **no nav bar** — just a small clickable outline icon
-    (`\outlinebutton`, bottom-centre) that jumps to the **current section's
-    divider** (`\hyperlink{sec\arabic{section}}`), plus a quiet top-left section
-    label for context. There is no separate master Contents slide.
-  - These hyperlinks/TOCs make the two-pass build mandatory.
+- **Current slide-writing requirements override older examples below.**
+  Use incremental overlays for visible bullet lists; keep section labels small;
+  highlight only one or two important terms/numbers per slide; keep all content
+  above the footer logos; use footer citations instead of end-only references;
+  and use modern section cards instead of agenda/Contents slides unless the
+  user asks for an agenda.
+- **Bullet overlays are mandatory by default.** For visible bullet lists, use
+  `\begin{itemize}[<+->]` / `\begin{enumerate}[<+->]` or explicit `\item<n->`
+  so points appear one at a time. Keep static bullets only when the user asks
+  for a handout-style slide or when the list is purely a compact legend.
+- **Highlight sparingly.** Use color only for one or two truly important words,
+  numbers, or terms on a slide. Prefer `\textcolor{accentred}{...}` or
+  `\textcolor{accentblue}{...}` when those metadata colors exist. Do not color
+  whole paragraphs, long bullets, or many table cells.
+- **Keep the footer logo area clear.** Treat the uni.lu and SnT footer logos as
+  a hard bottom boundary. Content, plots, tables, and captions must remain above
+  the footline; split crowded slides instead of crossing into the logo area.
+- **Cite sources on the slide.** Use `\framecite{...}` at the cited claim to
+  print a small superscript marker and a matching `\scriptsize` footer citation
+  above the logos. Use `\framecite[2]{...}` for a second source on the same
+  slide. Prefer this over a final references section for meeting decks. Keep an
+  end references frame only when the user asks for it or the venue requires a
+  bibliography.
+- **Section breaks need approval before redesign.** If changing
+  `\AtBeginSection`, propose a plan first: remove intermediate dividers, replace
+  them with a minimal section-title card, or keep only one opening outline slide.
+  Section labels/headings used for navigation or context should be small and
+  unobtrusive.
+- **Navigation model.** Do not include an agenda slide by default. Each
+  `\section{...}` creates a no-frame-number section card with the old template
+  background, a large circular section number, uppercase section title, and
+  automatic bullet subheadings from that section's `\subsection{...}` entries.
+  Use `\agendaslide` only when the user explicitly asks for a full agenda.
+
+- **Content slides are automatic and top-aligned.** Just write
+  `\section{Label}` (sets the grey top-left label) and
+  `\begin{frame}{Action title}`. The preamble supplies the top-left content
+  start, navy title, inset top-right frame counter, styled `block`s, and the
+  uni.lu (left) / SnT (right) footer logos. Section-divider behavior is
+  controlled by `\AtBeginSection` in `Sections/00_preamble.tex`.
+- **Section navigation.** Content sections open with `\section{...}` and may use
+  `\subsection{...}`. `\AtBeginSection` inserts a modern section card with
+  `\hypertarget{sec\arabic{section}}{}`; subsection entries become bullet
+  subheadings on the section card. The agenda and section targets make the
+  two-pass build mandatory.
 - **Metadata-driven.** `\title \author \institute \date`, plus `\eventname`
   `\eventfull` (title slide) and `\contactemail` `\contactweb` (closing slide).
 - **Title & closing geometry** use a 16×9 TikZ grid (10 mm/unit at
@@ -128,7 +155,10 @@ Gotchas: the project path contains `[SigCom]` → always `-LiteralPath`. Run
 - Keep asset/figure paths relative to the template root.
 - Preserve `02_title_slide.tex`, `09_closing.tex`, and `beamerthemeblei.sty`
   unless a redesign is explicitly requested.
-- The `03..08` files are disposable examples — replace their content freely for
+- Never overload a frame. If content touches the footer, collides with logos, or
+  needs very small text to fit, split it into multiple frames or move details to
+  speaker notes/backup.
+- The `03..07` files are disposable examples - replace their content freely for
   a real talk.
 
 ## When doing substantial content work

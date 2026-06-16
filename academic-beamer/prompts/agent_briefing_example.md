@@ -27,9 +27,21 @@ Two passes are mandatory (TikZ `remember picture`). The script kills Adobe/Sumat
 
 **Action titles:** every `\begin{frame}{...}` title must be a complete sentence stating the takeaway — not a topic label like "Results" or "Method".
 
-**Equations:** use native LaTeX math (`\[...\]`, `align`, `align*`). Derivation details go in `\note{...}` or backup frames after `\appendix`. Use `\widesep` inside `\begin{itemize}` to increase vertical spacing between bullets.
+**Bullets:** visible bullet lists must reveal one point at a time. Use `\begin{itemize}[<+->]` / `\begin{enumerate}[<+->]` or explicit `\item<n->` overlays. Keep static bullets only for compact legends or if the user asks for handout-style slides.
+
+**Highlighting:** highlight very little: one or two important terms, numbers, or decisions per slide. Do not color whole paragraphs or dense table regions.
+
+**Equations:** use native LaTeX math (`\[...\]`, `align`, `align*`). Derivation details go in `\note{...}` or backup frames after `\appendix`. Use `\widesep` inside `\begin{itemize}[<+->]` to increase vertical spacing between bullets.
 
 **Figures:** paths relative to the template root (`UniLU_PPT/`). Prefer `.pdf`/`.pgf` for plots; high-res `.png` for diagrams. Missing figures render as a labelled placeholder box — compile always succeeds.
+
+**Footer boundary:** the uni.lu/SnT logos define a hard bottom boundary. No content, plots, tables, captions, or equations may cross into the footer/logo area. Split overloaded slides instead.
+
+**Citations:** cite inline with `\framecite{...}` so the claim gets a small superscript marker and the matching `\scriptsize` source appears in the footer. Use `\framecite[2]{...}` for a second source on the same slide. Do not create an end references frame unless the user or venue requires a bibliography.
+
+**Section breaks:** do not include an agenda slide unless asked. Each `\section{...}` creates a modern section card on the old template background with a circular section number, uppercase title, and bullet subheadings from `\subsection{...}` entries; do not add repeated full Contents dividers.
+
+**Frame layout:** normal content frames are top-aligned by default. Start content under the frame title with the template margins; only use `\begin{frame}[c]{...}` for an intentionally centered slide.
 
 **Speaker notes:** use `\note{...}` for single-paragraph notes or the `\notes{point one; point two}` helper (defined in `00_preamble.tex`) for bullet-list notes.
 
@@ -38,7 +50,7 @@ Two passes are mandatory (TikZ `remember picture`). The script kills Adobe/Sumat
 | Want to change | Edit |
 |---|---|
 | Title, author, affiliation, date, event, contact email/web, theme colours | `Sections/01_metadata.tex` |
-| Content-slide chrome: section label, corner arc, navy title, block style, footer logos | `Sections/00_preamble.tex` |
+| Content-slide chrome: section label, inset frame counter, navy title, block style, footer logos | `Sections/00_preamble.tex` |
 | Title slide design (panel, arcs, logos) | `Sections/02_title_slide.tex` |
 | Closing/contact slide or QR card | `Sections/09_closing.tex` |
 | Packages or repeated macros | `Sections/00_preamble.tex` |

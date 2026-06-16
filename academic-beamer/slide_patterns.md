@@ -18,13 +18,12 @@ Keep `example.tex` as the driver:
 \input{Sections/05_derivation_and_properties}
 \input{Sections/06_application}
 \input{Sections/07_summary}
-\input{Sections/08_references}
 \input{Sections/09_closing}
 
 \end{document}
 ```
 
-Add new content by creating or editing files under `Sections/`, then add one `\input{...}` line to the driver when needed. Each content section opens with `\section{...}` (and optional `\subsection{...}`), which automatically inserts a clean "Contents" divider before the section and feeds the bottom-centre outline button.
+Add new content by creating or editing files under `Sections/`, then add one `\input{...}` line to the driver when needed. Each content section opens with `\section{...}` (and optional `\subsection{...}`), which creates a modern section card on the old template background: circular section number, uppercase title, and bullet subheadings from the section's subsections. Do not include an agenda slide unless the user explicitly asks for one.
 
 ## 2. Title Slide Pattern
 
@@ -49,16 +48,20 @@ Use for most argument steps.
 
 ```latex
 \begin{frame}{Action title stating the takeaway}
-\begin{itemize}
+\begin{itemize}[<+->]
   \widesep
-  \item First evidence point.
+  \item First evidence point\framecite{Author et al., short venue/year}.
   \item Second evidence point.
   \item Implication or bridge to the next frame.
 \end{itemize}
 \end{frame}
 ```
 
-Keep bullets short. Use bold or `\alert{...}` sparingly.
+Normal content frames are top-aligned by the template. Start with the evidence
+or exhibit directly under the frame title; do not add manual vertical centering.
+
+Keep bullets short. Use color sparingly: highlight only one or two important
+terms or numbers on the slide.
 
 ## 4. Two-Column Frame
 
@@ -68,20 +71,21 @@ Use for comparisons, model-vs-baseline, or text plus figure.
 \begin{frame}{Action title stating the comparison}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.48\textwidth}
-\begin{itemize}
+\begin{itemize}[<+->]
   \item Left-side claim.
   \item Supporting detail.
 \end{itemize}
 \end{column}
 \begin{column}{0.48\textwidth}
 \centering
-\includegraphics[width=\textwidth]{figures/example.pdf}
+\includegraphics[width=\textwidth]{figures/example.pdf}\framecite{Source: dataset/paper/software note}
 \end{column}
 \end{columns}
 \end{frame}
 ```
 
-Do not overload both columns with dense text.
+Do not overload both columns with dense text. Keep all content above the footer
+logos; split the slide if a table, plot, or text block enters the logo area.
 
 ## 5. Equation Frame
 
@@ -92,8 +96,8 @@ Use for one key equation and interpretation.
 \[
   F_{\mathrm{out}} = \frac{\langle \psi | \rho_{\mathrm{out}} | \psi \rangle}
                          {\mathrm{Tr}(\rho_{\mathrm{out}})}
-\]
-\begin{itemize}
+\]\framecite{Notation follows Author et al., year}
+\begin{itemize}[<+->]
   \item Define only the symbols needed on this frame.
   \item State the interpretation, not every algebra step.
 \end{itemize}
@@ -108,10 +112,10 @@ Use overlays when revealing logic step by step.
 
 ```latex
 \begin{frame}{Action title}
-\begin{itemize}
-  \item<1-> First point.
-  \item<2-> Second point.
-  \item<3-> Takeaway.
+\begin{itemize}[<+->]
+  \item First point.
+  \item Second point.
+  \item Takeaway.
 \end{itemize}
 \end{frame}
 ```
@@ -130,7 +134,7 @@ Use for simulation plots and experimental results.
 \includegraphics[width=\textwidth]{figures/result.pdf}
 \end{column}
 \begin{column}{0.38\textwidth}
-\begin{itemize}
+\begin{itemize}[<+->]
   \item What changes in the plot.
   \item Why it matters.
   \item Limitation or condition.
@@ -142,13 +146,17 @@ Use for simulation plots and experimental results.
 
 The title should state the result, not `Results`.
 
+Use `\framecite{...}` at the citation site. It prints a small superscript marker
+and a matching footer citation. Do not build a separate end references frame
+unless the user or venue requires it.
+
 ## 8. Summary Frame
 
 Use for the final visible frame.
 
 ```latex
 \begin{frame}{Summary}
-\begin{enumerate}
+\begin{enumerate}[<+->]
   \item Main contribution.
   \item Main evidence.
   \item Practical implication or next step.

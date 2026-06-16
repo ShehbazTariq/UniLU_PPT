@@ -1,4 +1,4 @@
-\documentclass[aspectratio=169,10pt,xcolor={dvipsnames}]{beamer}
+\documentclass[aspectratio=169,10pt,xcolor={dvipsnames},t]{beamer}
 
 %\includeonlyframes{current}
 
@@ -108,6 +108,16 @@
 }
 
 \newcommand{\citelink}[2]{\href{#1}{\small\color{gray}[#2]}}
+\newcommand{\citehere}[1]{\textsuperscript{\scriptsize #1}}
+\NewDocumentCommand{\slidecite}{O{1} m}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south west, text=sectiongrey, font=\scriptsize, align=left,
+      text width=0.73\paperwidth]
+      at ([xshift=0.13\paperwidth, yshift=0.087\paperheight]current page.south west)
+      {\citehere{#1}\,#2};
+  \end{tikzpicture}%
+}
+\NewDocumentCommand{\framecite}{O{1} m}{\citehere{#1}\slidecite[#1]{#2}}
 
 \definecolor{mplblue}{HTML}{1f77b4}
 \definecolor{mplorange}{HTML}{ff7f0e}
@@ -134,11 +144,11 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Content-slide layout (logos, section label, page number + corner arc)      %
+% Content-slide layout (logos, section label, page number + counter rule)   %
 %   - bottom left  : uni.lu short logo                                        %
 %   - bottom right : SnT logo                                                 %
 %   - top left     : current \section name (small, grey)                      %
-%   - top right    : frame number inside a light corner arc                   %
+%   - top right    : inset frame number with a short light rule               %
 %   - frame title  : large bold navy                                          %
 % Plain frames (e.g. the title slide) suppress the headline/footline, so      %
 % these decorations appear only on ordinary content frames.                   %
@@ -146,9 +156,10 @@
 
 \definecolor{titlenavy}{HTML}{1d2c44}   % big frame title
 \definecolor{sectiongrey}{HTML}{8a93a3} % top-left section label
-\definecolor{arcgrey}{HTML}{c9cedb}     % top-right corner arc
+\definecolor{arcgrey}{HTML}{c9cedb}     % subtle header rule
 
 \setbeamercolor{background canvas}{bg=white}
+\setbeamersize{text margin left=0.055\paperwidth,text margin right=0.055\paperwidth}
 
 % ── Frame title: large, bold, navy ───────────────────────────────────────
 \setbeamercolor{frametitle}{fg=titlenavy}
@@ -164,17 +175,16 @@
 %  outline button and the Contents/divider pages.
 \setbeamertemplate{headline}{%
   \begin{tikzpicture}[remember picture, overlay]
-    % small light quarter-circle, detached from both edges
-    \draw[arcgrey, line width=0.9pt, line cap=round]
-      ([xshift=-1.05cm, yshift=-0.40cm]current page.north east)
-      arc[start angle=180, end angle=270, radius=0.75cm];
-    % frame counter, at the arc's centre (current/total)
-    \node[anchor=center, text=titlenavy, font=\bfseries\scriptsize]
-      at ([xshift=-0.40cm, yshift=-0.50cm]current page.north east)
+    % quiet right-aligned counter, inset from the corner
+    \node[anchor=north east, text=titlenavy, font=\bfseries\scriptsize]
+      at ([xshift=-0.045\paperwidth, yshift=-0.31cm]current page.north east)
       {\insertframenumber/\inserttotalframenumber};
+    \draw[arcgrey, line width=0.6pt, line cap=round]
+      ([xshift=-0.045\paperwidth, yshift=-0.57cm]current page.north east)
+      -- ++(-0.58cm,0);
     % section label, top-left (context only — not a nav control)
-    \node[anchor=north west, text=sectiongrey, font=\small]
-      at ([xshift=0.045\paperwidth, yshift=-0.30cm]current page.north west)
+    \node[anchor=north west, text=sectiongrey, font=\scriptsize]
+      at ([xshift=0.045\paperwidth, yshift=-0.32cm]current page.north west)
       {\insertsection};
   \end{tikzpicture}%
 }
@@ -186,29 +196,23 @@
 \setbeamercolor{subsection in toc shaded}{fg=titlenavy!58!white}
 \setbeamerfont{section in toc}{series=\bfseries}
 \setbeamerfont{subsection in toc}{size=\footnotesize}
+\setbeamertemplate{subsection in toc}{%
+  \leavevmode
+  \hbox{%
+    \textcolor{accentblue}{\raisebox{0.15ex}{\scriptsize$\bullet$}}%
+    \hspace{0.45em}%
+    \inserttocsubsection
+  }%
+  \par
+}
 
 % ── Outline button: small clickable "contents" icon → current section's
 %    divider (each divider lists every section, so it is a full nav hub) ────
-\newcommand{\outlinebutton}{%
-  \hyperlink{sec\arabic{section}}{%
-    \scalebox{0.7}{%
-      \begin{tikzpicture}[x=1mm, y=1mm, baseline=-0.4mm]
-        \foreach \yy in {0,-1.6,-3.2}{%
-          \fill[sectiongrey] (0,\yy) circle (0.42);
-          \draw[sectiongrey, line width=0.8pt, line cap=round] (1.4,\yy) -- (5.4,\yy);
-        }%
-      \end{tikzpicture}%
-    }%
-  }%
-}
-
 % ── Footline: uni.lu (left) · outline button (centre) · SnT (right) ───────
 \setbeamertemplate{footline}{%
   \hbox to\paperwidth{%
     \hspace*{0.03\paperwidth}%
     \raisebox{0pt}{\includegraphics[height=0.055\paperheight]{Assets/UniLu_short.png}}%
-    \hfil
-    \raisebox{0.013\paperheight}{\outlinebutton}%
     \hfil
     \raisebox{0pt}{\includegraphics[height=0.050\paperheight]{Assets/SnT_logo.png}}%
     \hspace*{0.03\paperwidth}%
@@ -224,6 +228,40 @@
 % ── Section divider: a clean "Contents" page before each section ──────────
 %  Current section highlighted with its subsections; other sections shaded
 %  with their subsections hidden. TOC entries are clickable.
+\newcommand{\agendaslide}{%
+  \begin{frame}[plain,noframenumbering,t]
+    \hypertarget{agenda}{}%
+    \begin{tikzpicture}[remember picture, overlay]
+      \node[anchor=center, inner sep=0pt]
+        at (current page.center)
+        {\includegraphics[width=\paperwidth,height=\paperheight]{Assets/outline_bg.png}};
+      \node[anchor=south west]
+        at ([xshift=0.03\paperwidth, yshift=0.025\paperheight] current page.south west)
+        {\includegraphics[height=0.055\paperheight]{Assets/UniLu_short.png}};
+      \node[anchor=south east]
+        at ([xshift=-0.03\paperwidth, yshift=0.025\paperheight] current page.south east)
+        {\includegraphics[height=0.050\paperheight]{Assets/SnT_logo.png}};
+    \end{tikzpicture}
+    \vspace*{0.32cm}
+    {\scriptsize\color{sectiongrey}Overview\par}
+    \vspace{0.38cm}
+    {\usebeamercolor[fg]{frametitle}\bfseries\Large Agenda\par}
+    \vspace{0.12cm}
+    {\color{arcgrey}\rule{0.18\paperwidth}{0.7pt}\par}
+    \vspace{0.55cm}
+    \begin{minipage}{0.82\paperwidth}
+      \small
+      \setlength{\parskip}{0.30em}
+      \setlength{\columnsep}{1.15cm}
+      \begin{multicols}{2}
+        \tableofcontents[hideallsubsections]
+      \end{multicols}
+    \end{minipage}
+  \end{frame}%
+}
+
+\newcommand{\sectionnumberdisplay}{\ifnum\value{section}<10 0\fi\thesection}
+
 \AtBeginSection[]{%
   {%
   \begin{frame}[plain,noframenumbering,t]
@@ -232,9 +270,41 @@
       \node[anchor=center, inner sep=0pt]
         at (current page.center)
         {\includegraphics[width=\paperwidth,height=\paperheight]{Assets/outline_bg.png}};
-      \node[anchor=north west, text=titlenavy, font=\bfseries\huge]
-        at ([xshift=0.045\paperwidth, yshift=-0.55cm] current page.north west)
-        {Contents};
+      \fill[titlenavy, opacity=0.03] (current page.south west) rectangle (current page.north east);
+      \begin{scope}[shift={([xshift=0.045\paperwidth,yshift=-0.075\paperheight]current page.north west)}]
+        \foreach \x in {0,...,10} {
+          \foreach \y in {0,...,5} {
+            \fill[titlenavy!34] (\x*0.18,-\y*0.18) circle[radius=0.55pt];
+          }
+        }
+      \end{scope}
+      \begin{scope}[shift={([xshift=0.865\paperwidth,yshift=-0.535\paperheight]current page.north west)}]
+        \foreach \x in {0,...,8} {
+          \foreach \y in {0,...,6} {
+            \fill[accentblue!68] (\x*0.18,-\y*0.18) circle[radius=0.55pt];
+          }
+        }
+      \end{scope}
+      \fill[accentblue!18] ([xshift=0.155\paperwidth,yshift=-0.485\paperheight] current page.north west) circle[radius=0.090\paperwidth];
+      \fill[titlenavy] ([xshift=0.155\paperwidth,yshift=-0.485\paperheight] current page.north west) circle[radius=0.069\paperwidth];
+      \node[anchor=center, text=white, font=\bfseries\fontsize{34}{36}\selectfont]
+        at ([xshift=0.155\paperwidth,yshift=-0.485\paperheight] current page.north west)
+        {\sectionnumberdisplay};
+      \node[anchor=west, text=titlenavy, font=\bfseries\LARGE, text width=0.56\paperwidth, align=left]
+        at ([xshift=0.285\paperwidth, yshift=-0.430\paperheight] current page.north west)
+        {\MakeUppercase{\insertsection}};
+      \node[anchor=north west, text=titlenavy, text width=0.48\paperwidth, align=left]
+        at ([xshift=0.287\paperwidth, yshift=-0.500\paperheight] current page.north west)
+        {%
+          \begin{minipage}{0.48\paperwidth}
+            \footnotesize
+            \setlength{\parskip}{0.15em}
+            \tableofcontents[currentsection,sectionstyle=hide,subsectionstyle=show/show/hide]
+          \end{minipage}
+        };
+      \draw[accentred, line width=0.9pt, line cap=round]
+        ([xshift=0.285\paperwidth, yshift=-0.470\paperheight] current page.north west)
+        -- ++(0.20\paperwidth,0);
       \node[anchor=south west]
         at ([xshift=0.03\paperwidth, yshift=0.025\paperheight] current page.south west)
         {\includegraphics[height=0.055\paperheight]{Assets/UniLu_short.png}};
@@ -242,15 +312,6 @@
         at ([xshift=-0.03\paperwidth, yshift=0.025\paperheight] current page.south east)
         {\includegraphics[height=0.050\paperheight]{Assets/SnT_logo.png}};
     \end{tikzpicture}
-    \vspace*{1.85cm}
-    {\footnotesize
-    \setlength{\columnsep}{1.2cm}
-    \begin{multicols}{2}
-      \tableofcontents[currentsection,
-                       sectionstyle=show/shaded,
-                       subsectionstyle=show/show/hide]
-    \end{multicols}
-    }
   \end{frame}
   }%
 }

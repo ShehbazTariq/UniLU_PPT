@@ -74,9 +74,13 @@ Run the ghost deck test: read only the frame titles in sequence. They should tel
 Default visible density:
 
 - one action title
-- 2 to 4 short bullets
+- 2 to 4 short bullets, revealed one at a time with Beamer overlays
 - one main figure, diagram, table, or equation block
 - one compact citation line when needed
+
+Use `\begin{itemize}[<+->]` or `\begin{enumerate}[<+->]` by default. Every
+visible bullet should appear one at a time unless the user explicitly asks for a
+static handout-style slide or the list is only a compact legend.
 
 For mathematical frames:
 
@@ -86,6 +90,15 @@ For mathematical frames:
 - derivation details in notes or backup frames
 
 Avoid paragraphs on visible slides.
+
+Avoid overloaded slides. Treat the footer logos as a hard lower boundary:
+content, equations, plots, tables, and captions must stay above the logo area.
+If the frame only fits by shrinking text aggressively or crossing the footer,
+split it or move details to notes/backup.
+
+Highlight very little. Use color for at most one or two important terms,
+numbers, or decisions per slide. Do not highlight whole bullets, paragraphs, or
+large table regions.
 
 ## 6. Equations
 
@@ -118,8 +131,20 @@ Use citations that are present in the source material or bibliography.
 Rules:
 
 - Do not invent references.
-- Keep visible citations compact.
-- Put detailed reference context in notes or references frames.
+- Cite claims inline with `\framecite{...}`. This prints a small superscript
+  marker at the citation site and a matching `\scriptsize` footer citation above
+  the logos.
+- Use `\framecite[2]{...}` for a second source on the same slide. For dense
+  multi-source slides, keep markers explicit with `\citehere{1}` and put the
+  corresponding footer text with `\slidecite[1]{...}`.
+- Keep footer citations above the footer logos and outside the main content
+  area.
+- Prefer footer citations over a final references section for ordinary meeting
+  decks. Add an end references frame only when the user asks for a bibliography
+  or the venue requires one.
+- Keep visible citations compact: author/year, paper short title, arXiv/DOI, or
+  a short source marker.
+- Put detailed reference context in notes or backup frames.
 - If no bibliography exists, use short textual source markers until the user supplies one.
 
 ## 9. Speaker Notes
