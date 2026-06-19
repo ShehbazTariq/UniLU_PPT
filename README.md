@@ -4,7 +4,15 @@ A clean, minimal Beamer theme for academic presentations, extended from
 [mvsoom/beamerthemeblei](https://github.com/mvsoom/beamerthemeblei) with a full
 University of Luxembourg / SnT institutional identity.
 
-See [`example.pdf`](./example.pdf) for a compiled preview of all features.
+Preview of the title, section-card, and content layouts:
+
+| Title | Section card | Content |
+|---|---|---|
+| ![Title slide](preview/01_title.png) | ![Section card](preview/02_section.png) | ![Content slide](preview/03_content.png) |
+
+Build locally (see [Quick start](#quick-start)) to produce the full `example.pdf`.
+The compiled PDF is a build artifact and is intentionally not tracked in Git;
+regenerate `preview/*.png` from a fresh build if you change the design.
 
 ## Features
 
@@ -21,18 +29,24 @@ See [`example.pdf`](./example.pdf) for a compiled preview of all features.
 
 ## Quick start
 
-1. Clone the repo and place `beamerthemeblei.sty` in your local texmf tree:
-   ```
-   ~/texmf/tex/latex/local/beamerthemeblei.sty
-   ```
+1. Clone the repo. Building from the repo root works as-is — `pdflatex` finds
+   `beamerthemeblei.sty` in the working directory. (Optional: to use the theme
+   from *any* directory, copy it into your local texmf tree at
+   `~/texmf/tex/latex/local/beamerthemeblei.sty`. This is not required for the
+   standard root build.)
 2. Edit `Sections/01_metadata.tex` — set your title, author, event, and contact details.
 3. Replace `Sections/03_*.tex` through `Sections/08_*.tex` with your content.
 4. Build:
    ```powershell
+   # Windows PowerShell 5.1 (what ships with Windows):
+   powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/build.ps1
+   # or, if PowerShell 7 is installed:
    pwsh academic-beamer/scripts/build.ps1
    ```
    Two passes are mandatory (TikZ `remember picture`). The script closes Adobe
-   Acrobat before compiling to avoid PDF file-lock errors.
+   Acrobat before compiling to avoid PDF file-lock errors, deletes the previous
+   PDF so a failed build cannot leave a stale one behind, and reports failure on
+   a non-zero `pdflatex` exit.
 
 ## File map
 

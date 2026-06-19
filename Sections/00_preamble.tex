@@ -37,64 +37,23 @@
 % Packages %
 %%%%%%%%%%%%
 \usepackage{amsmath}
-\usepackage{physics}
+\usepackage{physics}            % quantum/maths shortcuts: \ket, \bra, \dv, ...
 \usepackage{pgf}
 \DeclareUnicodeCharacter{2212}{-} % Needed for matplotlib's pgf output
-\usepackage{pythonhighlight}
-\usepackage{subfig}
-\usepackage{marvosym}
-\usepackage[normalem]{ulem}
-\let\Cross\relax
-\usepackage{bbding}
 \usepackage{ragged2e}
-\usepackage{multicol}
+\usepackage{multicol}           % used by the section-card / agenda layout
 
-%\usepackage{bm} % Clashes with main font, so use \boldsymbol
+% \bm is a convenience alias for \boldsymbol (the bm package clashes with the
+% theme font). \providecommand so it degrades gracefully if a future package
+% already defines \bm.
+\providecommand{\bm}{\boldsymbol}
 
 %%%%%%%%%%%%
 % Commands %
 %%%%%%%%%%%%
-\newcommand{\xmax}{x_{\text{max}}}
-\newcommand{\Kmax}{K_{\text{max}}}
-
-\newcommand{\bx}{{\bm x}}
-\newcommand{\bxnull}{{\bm x_0}}
-\newcommand{\blambda}{{\bm \lambda}}
-\newcommand{\ba}{{\bm a}}
-\newcommand{\bb}{{\bm b}}
-\newcommand{\btheta}{{\bm \theta}}
-\newcommand{\balpha}{{\bm \alpha}}
-\newcommand{\bu}{{\bm u}}
-\newcommand{\bd}{{\bm d}}
-\newcommand{\bA}{{\bm A}}
-\newcommand{\bbeta}{{\bm \beta}}
-
-\newcommand{\barx}[1]{\overline{x_{#1}}}
-\newcommand{\baru}[1]{\overline{u_{#1}}}
-\newcommand{\bbarx}{\overline{\bm x}}
-\newcommand{\bbarxnull}{\overline{\bm{x_0}}}
-\newcommand{\bbaru}{\overline{{\bm u}}}
-
-\DeclareMathOperator{\Pareto}{\mathsf{Pareto}}
-\DeclareMathOperator{\ParetoChain}{\mathsf{ParetoChain}}
-\DeclareMathOperator{\Jeffreys}{\mathsf{Jeffreys}}
-\DeclareMathOperator{\Exp}{\mathsf{Exp}}
-
-\newcommand{\priorinformation}{\mathcal{I}}
-\newcommand{\likelihood}{\mathcal{L}}
-\newcommand{\model}{\mathcal{M}}
-
-\newcommand{\orderedregion}{\mathcal{R}}
-
-\newcommand{\data}[1]{{\mathsf{#1}}}
-\newcommand{\little}{\data{little}}
-\newcommand{\until}{\data{until}}
-\newcommand{\shore}{\data{shore}}
-\newcommand{\that}{\data{that}}
-\newcommand{\you}{\data{you}}
-
-\newcommand{\numb}[1]{\mathsf{#1}}
-\newcommand{\bm}{\boldsymbol}
+% Add presentation-specific math macros here as needed, e.g.
+%   \newcommand{\R}{\mathbb{R}}
+%   \DeclareMathOperator{\Tr}{Tr}
 
 \let\originalincludegraphics\includegraphics
 \newcommand{\missingfigure}[1]{%
@@ -316,5 +275,5 @@
   }%
 }
 
-%%%%%%%%%
-% Title %
+% Title slide, closing slide, and metadata live in their own Sections files
+% (02_title_slide.tex, 09_closing.tex, 01_metadata.tex).

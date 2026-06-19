@@ -135,26 +135,27 @@ Always **two passes** (the title and closing slides use `remember picture`,
 so the first pass renders blank). Use the helper:
 
 ```powershell
+# Windows PowerShell 5.1 (default on Windows) — prefer this form:
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/build.ps1
+# PowerShell 7, only if `pwsh` is actually installed:
 pwsh academic-beamer/scripts/build.ps1
 ```
 
-It closes Adobe (which locks `example.pdf`), runs `pdflatex` twice from the
-root, and reports the PDF path plus fatal errors / missing files. Manual
-equivalent:
+Prefer the `powershell -File` form: `pwsh` (PowerShell 7) is frequently absent
+on Windows, so `pwsh academic-beamer/...` fails with "command not found." The
+script closes Adobe (which locks `example.pdf`), deletes the old PDF, runs
+`pdflatex` twice from the root, and reports failure on a non-zero exit plus any
+real TeX errors / missing input files. Manual equivalent:
 
 ```powershell
 Get-Process Acrobat -EA SilentlyContinue | Stop-Process -Force -EA SilentlyContinue
 Set-Location -LiteralPath '<path-to-UniLU_PPT>'   # -LiteralPath: the path has [brackets]
+Remove-Item -LiteralPath example.pdf -Force -EA SilentlyContinue
 pdflatex -interaction=nonstopmode example.tex ; pdflatex -interaction=nonstopmode example.tex
 ```
 
-If `pwsh` is unavailable on Windows, use:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/build.ps1
-```
-
-Gotchas: the project path contains `[SigCom]` → always `-LiteralPath`. Run
+Gotchas: the project path contains `[SigCom]` → always `-LiteralPath`. Building
+from the repo root finds `beamerthemeblei.sty` without a texmf install. Run
 `biber example` only when a real bibliography is cited.
 
 ## Editing rules
