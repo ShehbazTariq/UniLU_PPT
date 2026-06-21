@@ -17,6 +17,10 @@ example.pdf
 *.run.xml
 *.xdv
 tikz/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
 
 # Orphaned / unused assets (not referenced in any .tex file)
 Assets/Email.png

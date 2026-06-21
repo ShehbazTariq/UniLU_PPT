@@ -129,6 +129,22 @@ UniLU_PPT/
   (ImageMagick is not installed; this uses Pillow). Never edit a `*_clean.png`
   source; regenerate it.
 
+## Learning loop and token efficiency
+
+Before re-debugging a familiar Beamer build, path, asset, overlay, citation, or
+layout issue, run:
+
+```powershell
+python academic-beamer\scripts\skill_memory.py search "<task or error>"
+```
+
+After a non-obvious fix is verified, capture it with
+`python academic-beamer\scripts\skill_memory.py learn ...`. Read
+`academic-beamer/references/self-learning-recipes.md` for recipe policy. For
+explicit context/token reviews, read
+`academic-beamer/references/token-efficiency-review.md` and run
+`python academic-beamer\scripts\skill_memory.py review`.
+
 ## Build
 
 Always **two passes** (the title and closing slides use `remember picture`,
