@@ -126,6 +126,29 @@ Rules:
 - Do not stretch figures. Preserve aspect ratio.
 - Add concise captions only when the source or interpretation is not obvious.
 
+### TikZ diagrams and flow charts — no overlapping arrows or labels
+
+When you draw node-and-arrow diagrams (pipelines, graphs, lifecycles), the most
+common defect is an arrowhead, line, or edge label colliding with text. Avoid it:
+
+- Connect arrows between node *borders* (`\draw (a) -- (b);`), never to a
+  coordinate that lands inside or on top of another node. Let TikZ clip the line
+  at each node's border so arrowheads sit on the border, not on a label.
+- Never let a line or arrowhead cross a label. If a label must sit *on* an edge
+  (e.g. a key/badge on a connector), make it a `node` with `fill=white` (or the
+  slide background colour) so it masks the line behind it, and keep the
+  arrowheads on the far node borders, well clear of that label.
+- Do not stack a label and an arrowhead at the same point. Place edge labels off
+  the line with `auto`, `left=`/`right=`, or `sloped`, plus a small offset.
+- Give nodes real separation (`node distance`, or explicit coordinates) so
+  arrows have a clear run and labels have room. If a small badge sits between two
+  boxes, leave a vertical gap taller than the badge.
+- Route feedback / back edges around the *outside* of the layout (bend the curve
+  away from the cluster, e.g. `to[bend left=45] (a.west)`) instead of through the
+  boxes, and put the label on the outer side of the curve.
+- After rendering, open the page and check every arrow, arrowhead, and label for
+  overlap before finalizing — this is part of the QA checklist below.
+
 ## 8. Citations
 
 Use citations that are present in the source material or bibliography.
@@ -171,5 +194,6 @@ Before finalizing:
 - Check every edited frame for overflow.
 - Confirm overlays reveal content in the intended order.
 - Confirm figure paths resolve.
+- Check every TikZ diagram for overlapping arrows, arrowheads, or labels (see "TikZ diagrams and flow charts" above).
 - Confirm citations are either resolved or clearly reported as pending.
 - Click section headings and subsection bullets in the PDF; confirm they jump to the correct section card or subsection start page.
