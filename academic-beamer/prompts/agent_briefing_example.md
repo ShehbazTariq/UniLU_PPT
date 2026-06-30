@@ -40,7 +40,7 @@ Two passes are mandatory (TikZ `remember picture`). The script kills Adobe/Sumat
 
 **Footer boundary:** the uni.lu/SnT logos define a hard bottom boundary. No content, plots, tables, captions, or equations may cross into the footer/logo area. Split overloaded slides instead.
 
-**Citations:** cite inline with `\framecite{...}` so the claim gets a small superscript marker and the matching `\scriptsize` source appears in the footer. Use `\framecite[2]{...}` for a second source on the same slide. Do not create an end references frame unless the user or venue requires a bibliography.
+**Citations:** cite with `\framecite{...}` so the source appears in the footer above the logos. Include author/year text and the paper title, linked to the DOI or arXiv DOI URL when available. Use `\framecite[2]{...}` and `\framecite[3]{...}` for additional sources on separate footer lines. Do not show numbered reference labels. Do not create an end references frame unless the user or venue requires a bibliography.
 
 **Section breaks:** do not include an agenda slide unless asked. Each `\section{...}` creates a modern section card on the old template background with a circular section number, uppercase title, and bullet subheadings from `\subsection{...}` entries; do not add repeated full Contents dividers.
 

@@ -88,12 +88,14 @@ UniLU_PPT/
 - **Keep the footer logo area clear.** Treat the uni.lu and SnT footer logos as
   a hard bottom boundary. Content, plots, tables, and captions must remain above
   the footline; split crowded slides instead of crossing into the logo area.
-- **Cite sources on the slide.** Use `\framecite{...}` at the cited claim to
-  print a small superscript marker and a matching `\scriptsize` footer citation
-  above the logos. Use `\framecite[2]{...}` for a second source on the same
-  slide. Prefer this over a final references section for meeting decks. Keep an
-  end references frame only when the user asks for it or the venue requires a
-  bibliography.
+- **Cite sources in the slide footer.** Use `\framecite{...}` to print a small
+  footer citation above the logos. The visible citation must include
+  author/year text and the paper title, linked to the DOI or arXiv DOI URL when
+  available. Do not print numbered reference labels. Use `\framecite[2]{...}`,
+  `\framecite[3]{...}`, and so on for multiple sources; each source appears on
+  its own footer line. Prefer this over a final references section for meeting
+  decks. Keep an end references frame only when the user asks for it or the
+  venue requires a bibliography.
 - **Section-break redesigns need approval when unsolicited.** If the user asks
   for a concrete section-card tweak, implement it and render the example. If
   you are proposing an unsolicited or ambiguous `\AtBeginSection` redesign,

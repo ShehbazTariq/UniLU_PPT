@@ -146,9 +146,12 @@ Use for simulation plots and experimental results.
 
 The title should state the result, not `Results`.
 
-Use `\framecite{...}` at the citation site. It prints a small superscript marker
-and a matching footer citation. Do not build a separate end references frame
-unless the user or venue requires it.
+Use `\framecite{...}` to print a footer citation. The visible citation should
+include author/year text and the paper title, linked to the DOI or arXiv DOI URL
+when available. Use `\framecite[2]{...}` and `\framecite[3]{...}` for additional
+sources on separate footer lines. Do not print numbered reference labels, and
+do not build a separate end references frame unless the user or venue requires
+it.
 
 ## 8. Summary Frame
 

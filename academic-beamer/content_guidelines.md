@@ -156,19 +156,21 @@ Use citations that are present in the source material or bibliography.
 Rules:
 
 - Do not invent references.
-- Cite claims inline with `\framecite{...}`. This prints a small superscript
-  marker at the citation site and a matching `\scriptsize` footer citation above
-  the logos.
-- Use `\framecite[2]{...}` for a second source on the same slide. For dense
-  multi-source slides, keep markers explicit with `\citehere{1}` and put the
-  corresponding footer text with `\slidecite[1]{...}`.
+- Cite claims with `\framecite{...}`. This prints a small footer citation above
+  the logos. It does not print a visible marker in the slide body.
+- The visible citation must include author/year text and the paper title. Link
+  the citation text to the DOI or arXiv DOI URL when one is available.
+- Do not show numbered reference labels in the footer.
+- Use `\framecite[2]{...}` for a second source, `\framecite[3]{...}` for a
+  third source, and so on. Each source appears on its own footer line.
 - Keep footer citations above the footer logos and outside the main content
-  area.
+  area. If content approaches the citations, move the content up, split the
+  slide, or lower the citation rows in the preamble.
 - Prefer footer citations over a final references section for ordinary meeting
   decks. Add an end references frame only when the user asks for a bibliography
   or the venue requires one.
-- Keep visible citations compact: author/year, paper short title, arXiv/DOI, or
-  a short source marker.
+- Keep visible citations compact but complete enough for a talk: author/year,
+  paper title, venue or preprint server, and a DOI-linked target.
 - Put detailed reference context in notes or backup frames.
 - If no bibliography exists, use short textual source markers until the user supplies one.
 
