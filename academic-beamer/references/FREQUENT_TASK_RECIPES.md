@@ -17,3 +17,15 @@ Short, reproducible fixes captured after a solved skill-specific problem.
 - Tags: `powershell`, `windows-paths`, `beamer-build`
 - Learned: 2026-06-21T18:40:17+02:00
 <!-- /SKILL_LEARNED_RECIPE:bracket-safe-beamer-build-commands -->
+
+<!-- SKILL_LEARNED_RECIPE:use-compactblock-for-narrow-beamer-callouts -->
+### Use compactblock for narrow Beamer callouts
+- Problem: Stacked or narrow-column callouts can overflow when written as plain Beamer blocks.
+- Root cause: Plain blocks keep normal body size and spacing, which is too large for stacked callouts or columns <=0.45 textwidth.
+- Fix: Define compactblock in Sections/00_preamble.tex and use it instead of plain block for stacked callouts or callouts in <=0.45\textwidth columns. Keep visible body text to one or two short lines and move exact values to notes.
+- Use when: A slide has stacked callouts or a callout inside a narrow Beamer column.
+- File: `Sections/00_preamble.tex`
+- File: `academic-beamer/slide_patterns.md`
+- Tags: `beamer-layout`, `compactblock`, `callouts`
+- Learned: 2026-07-01T13:41:06+02:00
+<!-- /SKILL_LEARNED_RECIPE:use-compactblock-for-narrow-beamer-callouts -->

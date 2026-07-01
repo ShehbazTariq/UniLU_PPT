@@ -23,6 +23,7 @@ regenerate `preview/*.png` from a fresh build if you change the design.
 - uni.lu + SnT footer logos on content and divider slides
 - `\notes{point; point}` helper for structured speaker notes
 - `\widesep` for relaxed bullet spacing
+- `compactblock` for stacked callouts or callouts in narrow columns
 - `\colorboxed` for highlighting equations
 - `\missingfigure{}` placeholder — missing figure paths compile cleanly
 - Built-in bibliography support with `biblatex` / `biber`
@@ -82,7 +83,7 @@ UniLU_PPT/
 | Want to change | Edit |
 |---|---|
 | Title, author, date, event, contact, theme colours | `Sections/01_metadata.tex` |
-| Content-slide chrome: section label, corner arc, footer logos | `Sections/00_preamble.tex` |
+| Content-slide chrome: section label, corner arc, block/compactblock style, footer logos | `Sections/00_preamble.tex` |
 | Title slide (panel, arcs, logos) | `Sections/02_title_slide.tex` |
 | Closing/contact slide or QR card | `Sections/09_closing.tex` |
 | Add or reorder slides | Create `Sections/NN_name.tex`, add `\input{...}` to `example.tex` |
@@ -91,7 +92,8 @@ UniLU_PPT/
 ## Slide patterns
 
 See `academic-beamer/slide_patterns.md` for ready-to-copy templates:
-standard claim, two-column, equation, overlay, figure-result, summary, backup.
+standard claim, two-column, compact callout, equation, overlay, figure-result,
+summary, backup.
 
 ## Assets
 

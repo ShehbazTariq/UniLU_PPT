@@ -62,7 +62,7 @@ UniLU_PPT/
 | Want to change… | Edit |
 | --- | --- |
 | Title, author, affiliation, date, event name, contact email/web, theme colours | `Sections/01_metadata.tex` |
-| Content-slide chrome: section label, inset frame counter, navy title size, block style, footer logos | `Sections/00_preamble.tex` (the "Content-slide layout" block) |
+| Content-slide chrome: section label, inset frame counter, navy title size, block/compactblock style, footer logos | `Sections/00_preamble.tex` (the "Content-slide layout" block) |
 | Title slide design (panel, arcs, logos, layout) | `Sections/02_title_slide.tex` |
 | Section dividers, TOC/label styling, footer/logo safe area | `Sections/00_preamble.tex` (`\AtBeginSection`, headline, footline) |
 | Closing/contact slide, QR card placement | `Sections/09_closing.tex` |
@@ -73,10 +73,11 @@ UniLU_PPT/
 
 - **Current slide-writing requirements override older examples below.**
   Use incremental overlays for visible bullet lists; keep section labels small;
-  highlight only one or two important terms/numbers per slide; keep all content
-  above the footer logos; use footer citations instead of end-only references;
-  and use modern section cards instead of agenda/Contents slides unless the
-  user asks for an agenda.
+  highlight only one or two important terms/numbers per slide; use
+  `compactblock` instead of plain `block` for stacked callouts or callouts in
+  columns `<=0.45\textwidth`; keep all content above the footer logos; use
+  footer citations instead of end-only references; and use modern section cards
+  instead of agenda/Contents slides unless the user asks for an agenda.
 - **Bullet overlays are mandatory by default.** For visible bullet lists, use
   `\begin{itemize}[<+->]` / `\begin{enumerate}[<+->]` or explicit `\item<n->`
   so points appear one at a time. Keep static bullets only when the user asks
@@ -85,6 +86,10 @@ UniLU_PPT/
   numbers, or terms on a slide. Prefer `\textcolor{accentred}{...}` or
   `\textcolor{accentblue}{...}` when those metadata colors exist. Do not color
   whole paragraphs, long bullets, or many table cells.
+- **Use compact callouts in narrow spaces.** Use `compactblock` instead of a
+  plain `block` for stacked callouts or any callout inside a
+  `<=0.45\textwidth` column. Keep visible body text to one or two short lines;
+  move exact values or supporting detail to `\note{...}` / `\notes{...}`.
 - **Keep the footer logo area clear.** Treat the uni.lu and SnT footer logos as
   a hard bottom boundary. Content, plots, tables, and captions must remain above
   the footline; split crowded slides instead of crossing into the logo area.
@@ -110,9 +115,10 @@ UniLU_PPT/
 - **Content slides are automatic and top-aligned.** Just write
   `\section{Label}` (sets the grey top-left label) and
   `\begin{frame}{Action title}`. The preamble supplies the top-left content
-  start, navy title, inset top-right frame counter, styled `block`s, and the
-  uni.lu (left) / SnT (right) footer logos. Section-divider behavior is
-  controlled by `\AtBeginSection` in `Sections/00_preamble.tex`.
+  start, navy title, inset top-right frame counter, styled `block`s,
+  compact `compactblock` callouts, and the uni.lu (left) / SnT (right) footer
+  logos. Section-divider behavior is controlled by `\AtBeginSection` in
+  `Sections/00_preamble.tex`.
 - **Section navigation.** Content sections open with `\section{...}` and may use
   `\subsection{...}`. `\AtBeginSection` inserts a modern section card with
   `\hypertarget{sec\arabic{section}}{}`; subsection entries become bullet

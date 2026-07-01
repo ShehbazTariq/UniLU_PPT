@@ -86,6 +86,20 @@ Use for comparisons, model-vs-baseline, or text plus figure.
 
 Do not overload both columns with dense text. Keep all content above the footer
 logos; split the slide if a table, plot, or text block enters the logo area.
+For stacked callouts or callouts in columns `<=0.45\textwidth`, use
+`compactblock` instead of a plain `block`:
+
+```latex
+\begin{column}{0.42\textwidth}
+\begin{compactblock}{Main result}
+One or two short lines of visible takeaway text.
+\end{compactblock}
+\vspace{0.45em}
+\begin{compactblock}{Next step}
+Another short callout; move exact values to notes.
+\end{compactblock}
+\end{column}
+```
 
 ## 5. Equation Frame
 

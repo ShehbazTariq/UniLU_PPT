@@ -34,6 +34,8 @@ Two passes are mandatory (TikZ `remember picture`). The script kills Adobe/Sumat
 
 **Highlighting:** highlight very little: one or two important terms, numbers, or decisions per slide. Do not color whole paragraphs or dense table regions.
 
+**Callouts:** use `compactblock` instead of plain `block` for stacked callouts or any callout in a `<=0.45\textwidth` column. Keep visible body text to one or two short lines and move exact values/details to speaker notes.
+
 **Equations:** use native LaTeX math (`\[...\]`, `align`, `align*`). Derivation details go in `\note{...}` or backup frames after `\appendix`. Use `\widesep` inside `\begin{itemize}[<+->]` to increase vertical spacing between bullets.
 
 **Figures:** paths relative to the template root (`UniLU_PPT/`). Prefer `.pdf`/`.pgf` for plots; high-res `.png` for diagrams. Missing figures render as a labelled placeholder box — compile always succeeds.
@@ -57,7 +59,7 @@ Two passes are mandatory (TikZ `remember picture`). The script kills Adobe/Sumat
 | Want to change | Edit |
 |---|---|
 | Title, author, affiliation, date, event, contact email/web, theme colours | `Sections/01_metadata.tex` |
-| Content-slide chrome: section label, inset frame counter, navy title, block style, footer logos | `Sections/00_preamble.tex` |
+| Content-slide chrome: section label, inset frame counter, navy title, block/compactblock style, footer logos | `Sections/00_preamble.tex` |
 | Title slide design (panel, arcs, logos) | `Sections/02_title_slide.tex` |
 | Closing/contact slide or QR card | `Sections/09_closing.tex` |
 | Packages or repeated macros | `Sections/00_preamble.tex` |

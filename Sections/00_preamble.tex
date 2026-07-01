@@ -188,6 +188,19 @@
 \setbeamercolor{block title}{bg=titlenavy,fg=white}
 \setbeamercolor{block body}{bg=titlenavy!7,fg=black}
 
+% Compact callout standard for narrow columns or stacked blocks. Use this
+% instead of a plain block whenever the box sits in a column <= 0.45\textwidth.
+% Keep visible text short and move exact numbers/details into speaker notes.
+\newenvironment{compactblock}[1]{%
+  \begin{block}{#1}%
+  \footnotesize
+  \RaggedRight
+  \setlength{\parskip}{0.18em}%
+  \emergencystretch=1.5em
+}{%
+  \end{block}%
+}
+
 % ── Section divider: a clean "Contents" page before each section ──────────
 %  Current section highlighted with its subsections; other sections shaded
 %  with their subsections hidden. TOC entries are clickable.

@@ -78,6 +78,7 @@ Default visible density:
 - one action title
 - 2 to 4 short bullets, revealed one at a time with Beamer overlays
 - one main figure, diagram, table, or equation block
+- compact callouts only when they fit without crowding
 - one compact citation line when needed
 
 Use `\begin{itemize}[<+->]` or `\begin{enumerate}[<+->]` by default. Every
@@ -97,6 +98,11 @@ Avoid overloaded slides. Treat the footer logos as a hard lower boundary:
 content, equations, plots, tables, and captions must stay above the logo area.
 If the frame only fits by shrinking text aggressively or crossing the footer,
 split it or move details to notes/backup.
+
+For callouts, use `compactblock` instead of a plain `block` when the callout is
+stacked with another callout or sits in a `<=0.45\textwidth` column. Keep the
+visible body to one or two short lines; put exact values, caveats, and longer
+supporting detail in notes or backup.
 
 Highlight very little. Use color for at most one or two important terms,
 numbers, or decisions per slide. Do not highlight whole bullets, paragraphs, or
