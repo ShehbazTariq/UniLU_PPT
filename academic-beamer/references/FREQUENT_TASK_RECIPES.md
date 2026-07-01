@@ -29,3 +29,35 @@ Short, reproducible fixes captured after a solved skill-specific problem.
 - Tags: `beamer-layout`, `compactblock`, `callouts`
 - Learned: 2026-07-01T13:41:06+02:00
 <!-- /SKILL_LEARNED_RECIPE:use-compactblock-for-narrow-beamer-callouts -->
+
+<!-- SKILL_LEARNED_RECIPE:prevent-beamer-footer-citation-and-section-card-rule-overlaps -->
+### Prevent Beamer footer citation and section-card rule overlaps
+- Problem: Frame citations can overlap late bullet overlays, and section-card red rules can cross wrapped section titles.
+- Root cause: Overlay content grows downward while framecite uses a fixed y position; section-card rule was placed at a fixed height inside the title block.
+- Fix: Keep frame citations in a lower bottom safe band below body text and above footer logos; split crowded frames when needed. Place section-card rules below the full title block, reduce title font one notch, and widen title text width. Use explicit node distance and shortened arrows in flow diagrams.
+- Use when: Editing UniLU/SnT Beamer decks with footer citations, section divider cards, or horizontal flow diagrams.
+- File: `Sections/00_preamble.tex`
+- Tags: `beamer`, `layout`, `citations`
+- Learned: 2026-07-01T18:49:31+02:00
+<!-- /SKILL_LEARNED_RECIPE:prevent-beamer-footer-citation-and-section-card-rule-overlaps -->
+
+<!-- SKILL_LEARNED_RECIPE:use-sparse-footer-citations-in-beamer-decks -->
+### Use sparse footer citations in Beamer decks
+- Problem: Repeated footer citations on every slide make the deck noisy and can compete with content.
+- Root cause: Citations were treated as a per-slide decoration instead of source provenance for the first supporting concept or figure.
+- Fix: Use framecite only when a source first supports a concept, theorem, model, or reproduced figure. Do not repeat the same citation on follow-up explanation slides; keep details in speaker notes or a source/provenance slide.
+- Use when: Reviewing or editing academic Beamer decks with many repeated literature footers.
+- File: `academic-beamer/SKILL.md`
+- File: `Sections/00_preamble.tex`
+- Tags: `beamer`, `citations`, `provenance`
+- Learned: 2026-07-01T18:49:31+02:00
+<!-- /SKILL_LEARNED_RECIPE:use-sparse-footer-citations-in-beamer-decks -->
+
+<!-- SKILL_LEARNED_RECIPE:keep-beamer-action-titles-compact -->
+### Keep Beamer action titles compact
+- Problem: Large frame titles can crowd the body area, especially for sentence-style action titles.
+- Root cause: `\huge` frame titles leave too little vertical space in the UniLU/SnT content-slide geometry.
+- Fix: Use `\LARGE` as the default `frametitle` font size in `Sections/00_preamble.tex`; if a title still crowds the content, shorten the action title or split the frame.
+- Use when: Updating UniLU/SnT Beamer templates or fixing slides where headings force equations, bullets, or citations into the footer safe band.
+- Tags: `beamer`, `layout`, `frametitle`
+<!-- /SKILL_LEARNED_RECIPE:keep-beamer-action-titles-compact -->

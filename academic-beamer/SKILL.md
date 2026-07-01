@@ -86,6 +86,10 @@ UniLU_PPT/
   numbers, or terms on a slide. Prefer `\textcolor{accentred}{...}` or
   `\textcolor{accentblue}{...}` when those metadata colors exist. Do not color
   whole paragraphs, long bullets, or many table cells.
+- **Keep action titles compact.** The default content-frame title font is
+  `\LARGE`, not `\huge`. If a title still wraps into the body area, shorten the
+  action title or split the frame instead of shrinking body content into the
+  footer safe band.
 - **Use compact callouts in narrow spaces.** Use `compactblock` instead of a
   plain `block` for stacked callouts or any callout inside a
   `<=0.45\textwidth` column. Keep visible body text to one or two short lines;
@@ -96,11 +100,13 @@ UniLU_PPT/
 - **Cite sources in the slide footer.** Use `\framecite{...}` to print a small
   footer citation above the logos. The visible citation must include
   author/year text and the paper title, linked to the DOI or arXiv DOI URL when
-  available. Do not print numbered reference labels. Use `\framecite[2]{...}`,
-  `\framecite[3]{...}`, and so on for multiple sources; each source appears on
-  its own footer line. Prefer this over a final references section for meeting
-  decks. Keep an end references frame only when the user asks for it or the
-  venue requires a bibliography.
+  available. Use citations sparingly: cite the first slide where a source
+  supports a concept, theorem, model, or reproduced figure, and do not repeat
+  the same citation on every follow-up explanation slide. Do not print numbered
+  reference labels. Use `\framecite[2]{...}`, `\framecite[3]{...}`, and so on
+  for multiple sources; each source appears on its own footer line. Prefer this
+  over a final references section for meeting decks. Keep an end references
+  frame only when the user asks for it or the venue requires a bibliography.
 - **Section-break redesigns need approval when unsolicited.** If the user asks
   for a concrete section-card tweak, implement it and render the example. If
   you are proposing an unsolicited or ambiguous `\AtBeginSection` redesign,

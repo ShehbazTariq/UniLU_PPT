@@ -70,11 +70,16 @@
 \newcommand{\citehere}[1]{\textsuperscript{\scriptsize #1}}
 \NewDocumentCommand{\slidecite}{O{1} m}{%
   \begin{tikzpicture}[remember picture, overlay]
-    \def\citeshift{0.112}%
-    \ifnum#1=2\def\citeshift{0.094}\fi%
-    \ifnum#1=3\def\citeshift{0.076}\fi%
-    \ifnum#1=4\def\citeshift{0.058}\fi%
-    \node[anchor=south west, text=sectiongrey, font=\tiny, align=left,
+    % Citation use standard: cite the first source-defining slide or a
+    % reproduced figure/provenance slide. Do not repeat the same footer on
+    % every explanatory slide in a section.
+    % Keep citations in the bottom safe band, below slide body content and
+    % above the footer logos. If a slide is still crowded, split the frame.
+    \def\citeshift{0.086}%
+    \ifnum#1=2\def\citeshift{0.068}\fi%
+    \ifnum#1=3\def\citeshift{0.050}\fi%
+    \ifnum#1=4\def\citeshift{0.032}\fi%
+    \node[anchor=south west, text=sectiongrey, font=\fontsize{4.6}{5.2}\selectfont, align=left,
       text width=0.82\paperwidth]
       at ([xshift=0.13\paperwidth, yshift=\citeshift\paperheight]current page.south west)
       {#2};
@@ -112,7 +117,7 @@
 %   - bottom right : SnT logo                                                 %
 %   - top left     : current \section name (small, grey)                      %
 %   - top right    : inset frame number with a short light rule               %
-%   - frame title  : large bold navy                                          %
+%   - frame title  : compact bold navy                                        %
 % Plain frames (e.g. the title slide) suppress the headline/footline, so      %
 % these decorations appear only on ordinary content frames.                   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,9 +129,9 @@
 \setbeamercolor{background canvas}{bg=white}
 \setbeamersize{text margin left=0.055\paperwidth,text margin right=0.055\paperwidth}
 
-% ── Frame title: large, bold, navy ───────────────────────────────────────
+% ── Frame title: compact, bold, navy ─────────────────────────────────────
 \setbeamercolor{frametitle}{fg=titlenavy}
-\setbeamerfont{frametitle}{series=\bfseries,size=\huge}
+\setbeamerfont{frametitle}{series=\bfseries,size=\LARGE}
 \setbeamertemplate{frametitle}{%
   \vspace{0.9em}%
   {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}%
@@ -266,11 +271,13 @@
       \node[anchor=center, text=white, font=\bfseries\fontsize{34}{36}\selectfont]
         at ([xshift=0.155\paperwidth,yshift=-0.485\paperheight] current page.north west)
         {\sectionnumberdisplay};
-      \node[anchor=west, text=titlenavy, font=\bfseries\LARGE, text width=0.56\paperwidth, align=left]
-        at ([xshift=0.285\paperwidth, yshift=-0.430\paperheight] current page.north west)
+      % Section-card title standard: keep the title high and the red rule
+      % below the full title block, so wrapped titles never overlap the rule.
+      \node[anchor=west, text=titlenavy, font=\bfseries\Large, text width=0.64\paperwidth, align=left]
+        at ([xshift=0.275\paperwidth, yshift=-0.385\paperheight] current page.north west)
         {\hyperlink{sec\thesection}{\MakeUppercase{\secname}}};
       \node[anchor=north west, text=titlenavy, text width=0.48\paperwidth, align=left]
-        at ([xshift=0.287\paperwidth, yshift=-0.500\paperheight] current page.north west)
+        at ([xshift=0.287\paperwidth, yshift=-0.510\paperheight] current page.north west)
         {%
           \begin{minipage}{0.48\paperwidth}
             \footnotesize
@@ -279,7 +286,7 @@
           \end{minipage}
         };
       \draw[accentred, line width=0.9pt, line cap=round]
-        ([xshift=0.285\paperwidth, yshift=-0.470\paperheight] current page.north west)
+        ([xshift=0.275\paperwidth, yshift=-0.475\paperheight] current page.north west)
         -- ++(0.20\paperwidth,0);
       \node[anchor=south west]
         at ([xshift=0.03\paperwidth, yshift=0.025\paperheight] current page.south west)
