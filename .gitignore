@@ -1,6 +1,7 @@
 # LaTeX build artifacts
 # (compiled deck is a build artifact, not source; preview lives in preview/)
 example.pdf
+_preview.*
 *.aux
 *.log
 *.nav

@@ -54,7 +54,7 @@ UniLU_PPT/
     09_closing.tex         closing/contact slide (mirror of title + QR card)
   academic-beamer/
     SKILL.md  content_guidelines.md  slide_patterns.md
-    scripts/  build.ps1  clean_bg.py
+    scripts/  build.ps1  preview.ps1  clean_bg.py
 ```
 
 ## Decision table — change X → edit file Y
@@ -187,6 +187,27 @@ pdflatex -interaction=nonstopmode example.tex ; pdflatex -interaction=nonstopmod
 Gotchas: the project path contains `[SigCom]` → always `-LiteralPath`. Building
 from the repo root finds `beamerthemeblei.sty` without a texmf install. Run
 `biber example` only when a real bibliography is cited.
+
+### Isolated previews
+
+For a focused slide or section edit, use the preview helper before the full
+build. It creates a temporary `_preview.tex` driver at the deck root, loads the
+normal preamble and metadata, and inputs only the requested source file.
+
+```powershell
+# Preview a complete section/source file:
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/preview.ps1 `
+  -Source Sections/03_motivation_and_model.tex
+
+# Preview one frame. The frame must have a Beamer label:
+# \begin{frame}[label=kl-conditions]{...}
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/preview.ps1 `
+  -Source Sections/03_motivation_and_model.tex -FrameLabel kl-conditions
+```
+
+Use isolated previews for quick layout/equation checks only. Always run the
+full `build.ps1` before delivery, because final frame numbers, section
+navigation, references, title, and closing slides come from the complete deck.
 
 ## Editing rules
 

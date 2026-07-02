@@ -49,6 +49,34 @@ regenerate `preview/*.png` from a fresh build if you change the design.
    PDF so a failed build cannot leave a stale one behind, and reports failure on
    a non-zero `pdflatex` exit.
 
+## Fast isolated previews
+
+For a focused edit, build only the section file you are working on:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/preview.ps1 `
+  -Source Sections/03_motivation_and_model.tex
+```
+
+For a single slide, give the frame a stable Beamer label:
+
+```latex
+\begin{frame}[label=kl-conditions]{Knill-Laflamme is the exact-correction test}
+```
+
+Then build only that frame:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/preview.ps1 `
+  -Source Sections/03_motivation_and_model.tex -FrameLabel kl-conditions
+```
+
+This creates `_preview.tex` and `_preview.pdf` at the deck root. Use it for
+fast layout and equation checks. Before delivering or exporting a deck, still
+run `academic-beamer/scripts/build.ps1`, because the full build is the final
+source of frame numbers, section navigation, references, title, and closing
+slides.
+
 ## File map
 
 ```
@@ -75,6 +103,7 @@ UniLU_PPT/
     prompts/               ready-made agent prompts
     scripts/
       build.ps1            two-pass build + PDF-lock workaround
+      preview.ps1          isolated section/frame preview build
       clean_bg.py          flood-fill background remover for logos (Pillow)
 ```
 
