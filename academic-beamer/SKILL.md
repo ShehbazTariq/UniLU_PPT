@@ -1,40 +1,27 @@
 ---
 name: academic-beamer
-description: Use for creating, editing, compiling, and reviewing academic Beamer presentations in the UniLU/SnT LaTeX template from ShehbazTariq/UniLU_PPT - conference talks, seminars, defenses, lab meetings, paper-to-slide conversions, research updates. Applies when creating new local presentations from the GitHub template repo, working with example.tex, Sections/*.tex, beamerthemeblei.sty, the title/closing slides, content-slide chrome, LaTeX equations, citations, figures, logos/QR assets, and sectionized Beamer workflows.
+description: Use when creating, editing, compiling, or reviewing UniLU/SnT Beamer decks from ShehbazTariq/UniLU_PPT - conference talks, seminars, defenses, lab meetings, paper-to-slide conversions, research updates, example.tex, Sections/*.tex, beamerthemeblei.sty, title/closing slides, citations, figures, logos/QR assets, and sectionized Beamer workflows.
 ---
 
 # Academic Beamer Skill (UniLU/SnT template)
 
 ## Purpose
 
-Create, revise, compile, or review academic Beamer decks built on the UniLU/SnT
-template in this project. Preserve the institutional design; improve the argument.
+Create, revise, compile, or review academic Beamer decks built on the UniLU/SnT template in this project. Preserve the institutional design; improve the argument.
 
 ## Template source workflow
 
-- Treat `https://github.com/ShehbazTariq/UniLU_PPT` as the canonical template
-  repository for new presentations.
-- Before creating a new presentation, look for an existing local clone of
-  `ShehbazTariq/UniLU_PPT`. If none exists, clone the repo; do not reclone over
-  an existing copy.
-- If the local template clone exists, update it from the remote with a
-  conservative fast-forward pull when the working tree is clean. If local
-  changes would be overwritten or the pull cannot fast-forward, stop and report
-  the state instead of forcing it.
-- Keep presentation-specific content, figures, build artifacts, PDFs, notes,
-  and output folders local to the new deck/workspace. Do not commit or push
-  generated presentation work back to the template repository unless the user
-  explicitly asks.
-- Copy or instantiate from the template for each new deck; use the template repo
-  only as the source of the structure and theme.
+- Treat `https://github.com/ShehbazTariq/UniLU_PPT` as the canonical template repository for new presentations.
+- Before creating a new presentation, look for an existing local clone; clone only if none exists.
+- If the local clone exists, fast-forward pull only when the working tree is clean; stop and report dirty, diverged, or non-fast-forward state.
+- Keep deck-specific content, figures, build artifacts, PDFs, notes, and outputs local to the new deck/workspace; do not commit generated talk work back to the template unless explicitly asked.
+- Copy or instantiate from the template for each new deck; use the template repo only as the source of structure and theme.
 
 ## Template map
 
-Template root = the parent of this skill folder when using the repo-local copy
-at `UniLU_PPT/academic-beamer/`. When this skill is installed under
-`.codex/skills/academic-beamer`, do not treat the installed skill's parent as
-the template root; locate the active `UniLU_PPT` repo from the user's path,
-current workspace, or an existing clone.
+Template root = the parent of this skill folder in the repo-local copy at `UniLU_PPT/academic-beamer/`. When installed under `.codex/skills/academic-beamer`, locate the active `UniLU_PPT` repo from the user's path, current workspace, optional local config, or an existing clone; do not use the installed skill's parent as the template root.
+
+Optional local config: if `academic-beamer/local.config.yaml` exists, read it before choosing paths, Python commands, or build commands. It is intentionally gitignored for machine-specific defaults such as `template_root`, `python_command`, `build_command`, and `notes`; never require it for public use.
 
 ```text
 UniLU_PPT/
@@ -46,11 +33,8 @@ UniLU_PPT/
     01_metadata.tex        all talk metadata + theme colours  ← edit per talk
     02_title_slide.tex     custom navy title slide (TikZ)
     03_motivation_and_model.tex .. 07_summary.tex
-                           generic EXAMPLE content slides; each opens a
-                           \section{...} (+ optional \subsection{...}):
-                           Introduction, Layouts, Equations, Figures, Summary
-    08_references.tex      optional bibliography/reference slide; not included
-                           by default for meeting decks
+                           generic EXAMPLE content slides; each opens a \section{...} (+ optional \subsection{...})
+    08_references.tex      optional bibliography/reference slide; not included by default for meeting decks
     09_closing.tex         closing/contact slide (mirror of title + QR card)
   academic-beamer/
     SKILL.md  content_guidelines.md  slide_patterns.md
@@ -71,13 +55,7 @@ UniLU_PPT/
 
 ## This template's specifics
 
-- **Current slide-writing requirements override older examples below.**
-  Use incremental overlays for visible bullet lists; keep section labels small;
-  highlight only one or two important terms/numbers per slide; use
-  `compactblock` instead of plain `block` for stacked callouts or callouts in
-  columns `<=0.45\textwidth`; keep all content above the footer logos; use
-  footer citations instead of end-only references; and use modern section cards
-  instead of agenda/Contents slides unless the user asks for an agenda.
+- **Current slide-writing requirements override older examples below.** Use incremental overlays for visible bullet lists; keep section labels small; highlight only one or two important terms/numbers per slide; use `compactblock` in stacked or `<=0.45\textwidth` callouts; keep content above footer logos; use footer citations; use modern section cards instead of agenda/Contents slides unless asked.
 - **Bullet overlays are mandatory by default.** For visible bullet lists, use
   `\begin{itemize}[<+->]` / `\begin{enumerate}[<+->]` or explicit `\item<n->`
   so points appear one at a time. Keep static bullets only when the user asks
@@ -97,16 +75,7 @@ UniLU_PPT/
 - **Keep the footer logo area clear.** Treat the uni.lu and SnT footer logos as
   a hard bottom boundary. Content, plots, tables, and captions must remain above
   the footline; split crowded slides instead of crossing into the logo area.
-- **Cite sources in the slide footer.** Use `\framecite{...}` to print a small
-  footer citation above the logos. The visible citation must include
-  author/year text and the paper title, linked to the DOI or arXiv DOI URL when
-  available. Use citations sparingly: cite the first slide where a source
-  supports a concept, theorem, model, or reproduced figure, and do not repeat
-  the same citation on every follow-up explanation slide. Do not print numbered
-  reference labels. Use `\framecite[2]{...}`, `\framecite[3]{...}`, and so on
-  for multiple sources; each source appears on its own footer line. Prefer this
-  over a final references section for meeting decks. Keep an end references
-  frame only when the user asks for it or the venue requires a bibliography.
+- **Cite sources in the slide footer.** Follow `academic-beamer/references/presentation_rules.md`: `\framecite{...}` must show author/year plus title and DOI/arXiv link when available; cite first supporting use, avoid repeated source footers, use separate footer lines for multiple sources, and keep end references only when requested or required.
 - **Section-break redesigns need approval when unsolicited.** If the user asks
   for a concrete section-card tweak, implement it and render the example. If
   you are proposing an unsolicited or ambiguous `\AtBeginSection` redesign,
