@@ -57,7 +57,7 @@ Short, reproducible fixes captured after a solved skill-specific problem.
 ### Keep Beamer action titles compact
 - Problem: Large frame titles can crowd the body area, especially for sentence-style action titles.
 - Root cause: `\huge` frame titles leave too little vertical space in the UniLU/SnT content-slide geometry.
-- Fix: Use `\LARGE` as the default `frametitle` font size in `Sections/00_preamble.tex`; if a title still crowds the content, shorten the action title or split the frame.
+- Fix: Use `\large` as the default `frametitle` font size in `Sections/00_preamble.tex`; if a title still crowds the content, shorten the action title or split the frame.
 - Use when: Updating UniLU/SnT Beamer templates or fixing slides where headings force equations, bullets, or citations into the footer safe band.
 - Tags: `beamer`, `layout`, `frametitle`
 <!-- /SKILL_LEARNED_RECIPE:keep-beamer-action-titles-compact -->
