@@ -38,7 +38,8 @@ UniLU_PPT/
     09_closing.tex         closing/contact slide (mirror of title + QR card)
   academic-beamer/
     SKILL.md  content_guidelines.md  slide_patterns.md
-    scripts/  build.ps1  preview.ps1  clean_bg.py
+    references/  create_workflow.md  review_workflow.md
+    scripts/  build.ps1  preview.ps1  deck_audit.py
 ```
 
 ## Decision table — change X → edit file Y
@@ -133,6 +134,28 @@ explicit context/token reviews, read
 `academic-beamer/references/token-efficiency-review.md` and run
 `python academic-beamer\scripts\skill_memory.py review`.
 
+## Planning and review workflow
+
+- For a new deck, paper-to-talk conversion, or major restructuring, read
+  `references/create_workflow.md`. Establish audience, duration, central claim,
+  evidence, and a timing-aware ghost deck before drafting frames.
+- For review requests, read `references/review_workflow.md` and choose the
+  narrowest applicable mode: proofreading, structural, visual, pedagogical,
+  comprehensive, or devil's advocate. Reviews are read-only unless the user
+  asks for edits.
+- Run the deterministic audit before final visual review:
+
+```powershell
+conda run -n SigCOM python academic-beamer/scripts/deck_audit.py example.tex
+```
+
+The audit separates errors from advisory warnings and supports timing, TeX-log,
+compiled-PDF, rendered-page, and JSON-report options. It does not replace
+inspection of the compiled PDF or scientific-source verification.
+- For paper pages or figure regions, use
+  `scripts/extract_pdf_figure.ps1`. It uses Poppler and records source PDF,
+  SHA-256, page, DPI, and crop in `figure_sources.csv`.
+
 ## Build
 
 Always **two passes** (the title and closing slides use `remember picture`,
@@ -193,6 +216,14 @@ conda run -n SigCOM python academic-beamer/scripts/tikz_slide_qa.py `
 Inspect every generated overlay page; automated text geometry checks do not validate scientific
 logic or arrow semantics.
 
+For a full-deck delivery check, run the normal two-pass build and then render
+the compiled pages for review:
+
+```powershell
+conda run -n SigCOM python academic-beamer/scripts/deck_audit.py example.tex `
+  --log example.log --pdf example.pdf --render-dir deck-audit/rendered
+```
+
 ## Editing rules
 
 - Keep the sectionized architecture: no `\documentclass`, packages, or
@@ -209,8 +240,8 @@ logic or arrow semantics.
 
 ## When doing substantial content work
 
-Sketch a slide outline first (number · purpose · action title · exhibit · key
-evidence · takeaway). Then:
+Follow `references/create_workflow.md` and sketch a timing-aware slide outline
+first (number, purpose, action title, exhibit, key evidence, takeaway). Then:
 
 - **Argument, density, equations, figures, citations, speaker notes, QA** →
   read `content_guidelines.md` (authoritative; not repeated here).
@@ -218,6 +249,8 @@ evidence · takeaway). Then:
   figure-result, summary, backup) → read `slide_patterns.md`.
 - **TikZ diagrams, quantum architectures, and overlay QA** → read
   `references/tikz_diagrams.md` and use `scripts/tikz_slide_qa.py` after previewing.
+- **Deck review or delivery QA** → read `references/review_workflow.md`, run
+  `scripts/deck_audit.py`, build twice, and inspect the rendered pages.
 - If a `notes/` folder exists, treat it as a source library, not a slide order:
   extract claims/results/citations, select what serves the talk, push
   derivations to `\note{...}` or backup frames. Never invent citations.

@@ -61,3 +61,15 @@ Short, reproducible fixes captured after a solved skill-specific problem.
 - Use when: Updating UniLU/SnT Beamer templates or fixing slides where headings force equations, bullets, or citations into the footer safe band.
 - Tags: `beamer`, `layout`, `frametitle`
 <!-- /SKILL_LEARNED_RECIPE:keep-beamer-action-titles-compact -->
+
+<!-- SKILL_LEARNED_RECIPE:audit-source-then-review-compiled-beamer-pages -->
+### Audit source, then review compiled Beamer pages
+- Problem: A clean TeX build can still hide generic titles, static bullet lists, unresolved placeholders, weak timing, or visually poor compiled pages.
+- Root cause: Compilation validates TeX execution, not presentation structure, pedagogy, or rendered layout.
+- Fix: Run `deck_audit.py` before the build, build twice, rerun it with `--log`, `--pdf`, and `--render-dir`, then inspect the contact sheet and full-size pages. Treat warnings as contextual review prompts rather than automatic failures.
+- Use when: Creating, substantially revising, reviewing, or delivering a UniLU/SnT deck.
+- Command: `conda run -n SigCOM python academic-beamer/scripts/deck_audit.py example.tex --log example.log --pdf example.pdf --render-dir deck-audit/rendered`
+- File: `academic-beamer/references/review_workflow.md`
+- Tags: `beamer`, `audit`, `visual-review`, `timing`
+- Learned: 2026-07-13T00:00:00+02:00
+<!-- /SKILL_LEARNED_RECIPE:audit-source-then-review-compiled-beamer-pages -->

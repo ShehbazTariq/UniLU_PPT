@@ -27,6 +27,9 @@ regenerate `preview/*.png` from a fresh build if you change the design.
 - `\colorboxed` for highlighting equations
 - `\missingfigure{}` placeholder — missing figure paths compile cleanly
 - Built-in bibliography support with `biblatex` / `biber`
+- Timing-aware deck planning and evidence/source mapping
+- Tested source, build-log, PDF, and visual-review diagnostics
+- Poppler-based paper figure extraction with page and SHA-256 provenance
 
 ## Quick start
 
@@ -48,6 +51,14 @@ regenerate `preview/*.png` from a fresh build if you change the design.
    Acrobat before compiling to avoid PDF file-lock errors, deletes the previous
    PDF so a failed build cannot leave a stale one behind, and reports failure on
    a non-zero `pdflatex` exit.
+5. Audit the source and compiled output:
+   ```powershell
+   conda run -n SigCOM python academic-beamer/scripts/deck_audit.py example.tex `
+     --log example.log --pdf example.pdf --render-dir deck-audit/rendered
+   ```
+   The audit reports hard errors separately from advisory presentation-quality
+   warnings. Inspect the rendered contact sheet and relevant full-size pages;
+   automated checks do not establish scientific correctness or visual quality.
 
 ## Fast isolated previews
 
@@ -104,8 +115,35 @@ UniLU_PPT/
     scripts/
       build.ps1            two-pass build + PDF-lock workaround
       preview.ps1          isolated section/frame preview build
+      deck_audit.py        structure/log/PDF diagnostics + page rendering
+      extract_pdf_figure.ps1  page/crop extraction with provenance
       clean_bg.py          flood-fill background remover for logos (Pillow)
 ```
+
+## Planning and review
+
+For a new deck or major paper-to-talk conversion, use
+[`academic-beamer/references/create_workflow.md`](academic-beamer/references/create_workflow.md).
+It covers the audience and duration brief, source inventory, timing budget,
+ghost deck, evidence map, batched drafting, and final quality loop.
+
+For existing decks, choose a focused review mode from
+[`academic-beamer/references/review_workflow.md`](academic-beamer/references/review_workflow.md):
+proofreading, structural audit, visual/layout audit, pedagogy, comprehensive
+review, or devil's-advocate questions.
+
+To extract a paper page or crop while retaining provenance:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File academic-beamer/scripts/extract_pdf_figure.ps1 `
+  -Pdf notes/paper.pdf -Pages 4 -Crop '180,260,1650,900' -Prefix method
+```
+
+The crop uses rendered-pixel coordinates `x,y,width,height`. The helper writes
+`figure_sources.csv` beside the extracted PNG. Recreate tables in LaTeX and use
+the PGFPlots workflow for data-driven plots. Add a public `\framecite{...}` when
+an extracted figure comes from another paper; the CSV is local provenance, not
+visible attribution.
 
 ## Decision table
 
@@ -135,5 +173,10 @@ replace a source logo.
 Base theme by [mvsoom](https://github.com/mvsoom/beamerthemeblei), inspired by
 David Blei's Variational Inference tutorial slides. Extended with UniLU/SnT
 institutional identity by Shehbaz Tariq.
+
+Planning and review ideas were selectively adapted from
+[Noi1r/beamer-skill](https://github.com/Noi1r/beamer-skill). The decisions and
+rejected incompatibilities are recorded in
+[`academic-beamer/references/upstream_adaptations.md`](academic-beamer/references/upstream_adaptations.md).
 
 Released under the MIT license.

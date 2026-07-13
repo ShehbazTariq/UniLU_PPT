@@ -181,8 +181,11 @@ Visible slides should remain concise.
 
 Before finalizing:
 
+- Run `deck_audit.py` on the root TeX source and assess every warning in context.
 - Compile from the template root.
 - Open the generated PDF.
+- For substantial or final reviews, pass the log and PDF to `deck_audit.py` and
+  generate a contact sheet for page-by-page visual inspection.
 - Check title slide logos and aspect ratio.
 - Check every edited frame for overflow.
 - Confirm overlays reveal content in the intended order.
