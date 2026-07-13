@@ -167,7 +167,42 @@ sources on separate footer lines. Do not print numbered reference labels, and
 do not build a separate end references frame unless the user or venue requires
 it.
 
-## 8. Summary Frame
+## 8. Stable TikZ Overlay Frame
+
+Use one fixed coordinate system and reveal state or emphasis without rebuilding the layout.
+
+```latex
+\begin{frame}{Measurement closes the hybrid optimization loop}
+\centering
+\begin{tikzpicture}[
+  node distance=12mm,
+  stage/.style={draw, rounded corners=2pt, minimum width=27mm,
+    minimum height=9mm, text width=24mm, align=center},
+  flow/.style={-{Latex[length=2.2mm]}, semithick}
+]
+  \node[stage] (encode) {Input encoding};
+  \node[stage, right=of encode] (quantum) {Quantum process};
+  \node[stage, right=of quantum] (measure) {Measurement};
+  \node[stage, below=of quantum] (update) {Classical update};
+
+  \draw[flow] (encode) -- (quantum);
+  \draw[flow] (quantum) -- (measure);
+  \draw[flow] (measure) to[bend left=20]
+    node[right, pos=0.55, fill=white] {observables} (update);
+  \draw[flow] (update) to[bend left=20]
+    node[left, pos=0.55, fill=white] {parameters} (quantum);
+
+  \onslide<2->{\node[overlay, draw=accentred, very thick, fit=(measure), inner sep=2pt] {};}
+  \onslide<3->{\node[overlay, draw=accentblue, very thick, fit=(update), inner sep=2pt] {};}
+\end{tikzpicture}
+\framecite{Author/year, paper title, DOI-linked source}
+\end{frame}
+```
+
+Load `positioning`, `arrows.meta`, and `fit` in the preamble. Read
+`references/tikz_diagrams.md`, preview the frame, run `tikz_slide_qa.py`, and inspect each overlay.
+
+## 9. Summary Frame
 
 Use for the final visible frame.
 
@@ -183,7 +218,7 @@ Use for the final visible frame.
 
 Do not introduce new evidence on the summary frame.
 
-## 9. Backup Frame
+## 10. Backup Frame
 
 Use backup frames for derivations, extra plots, robustness checks, and anticipated questions.
 
@@ -197,7 +232,7 @@ Use backup frames for derivations, extra plots, robustness checks, and anticipat
 
 Keep backup frames organized and title them clearly.
 
-## 10. Compile Pattern
+## 11. Compile Pattern
 
 Build with the helper (closes Adobe, runs two passes, reports):
 

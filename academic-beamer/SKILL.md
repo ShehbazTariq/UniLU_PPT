@@ -52,6 +52,7 @@ UniLU_PPT/
 | Closing/contact slide, QR card placement | `Sections/09_closing.tex` |
 | Add/remove/reorder slides | create/edit a `Sections/*.tex`, then add one `\input{...}` to `example.tex` |
 | Packages, repeated macros | `Sections/00_preamble.tex` |
+| TikZ diagram grammar, overlays, source practice, and rendered QA | `academic-beamer/references/tikz_diagrams.md` + `scripts/tikz_slide_qa.py` |
 
 ## This template's specifics
 
@@ -111,6 +112,10 @@ UniLU_PPT/
   background — clean black/white backgrounds with `scripts/clean_bg.py`
   (ImageMagick is not installed; this uses Pillow). Never edit a `*_clean.png`
   source; regenerate it.
+- **TikZ figures are reviewed artifacts.** Keep action titles and source prose outside the picture,
+  preserve node geometry across overlays, use `quantikz` for circuits, and run the source/render QA
+  workflow in `academic-beamer/references/tikz_diagrams.md`. Data-driven plots remain under the
+  PGFPlots skill.
 
 ## Learning loop and token efficiency
 
@@ -178,6 +183,16 @@ Use isolated previews for quick layout/equation checks only. Always run the
 full `build.ps1` before delivery, because final frame numbers, section
 navigation, references, title, and closing slides come from the complete deck.
 
+For an edited TikZ frame, follow the preview with artifact QA:
+
+```powershell
+conda run -n SigCOM python academic-beamer/scripts/tikz_slide_qa.py `
+  Sections/03_model.tex --pdf _preview.pdf --logic schematic --decision keep
+```
+
+Inspect every generated overlay page; automated text geometry checks do not validate scientific
+logic or arrow semantics.
+
 ## Editing rules
 
 - Keep the sectionized architecture: no `\documentclass`, packages, or
@@ -201,6 +216,8 @@ evidence · takeaway). Then:
   read `content_guidelines.md` (authoritative; not repeated here).
 - **Concrete Beamer frame patterns** (claim, two-column, equation, overlay,
   figure-result, summary, backup) → read `slide_patterns.md`.
+- **TikZ diagrams, quantum architectures, and overlay QA** → read
+  `references/tikz_diagrams.md` and use `scripts/tikz_slide_qa.py` after previewing.
 - If a `notes/` folder exists, treat it as a source library, not a slide order:
   extract claims/results/citations, select what serves the talk, push
   derivations to `\note{...}` or backup frames. Never invent citations.
